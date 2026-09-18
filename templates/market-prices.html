@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Market Prices - KrishiSathi India</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+  <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a2e1a">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<!-- Mobile Nav -->
+<nav class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-close" id="mobile-close">✕</button>
+  <a href="index.html">🏠 Home</a>
+  <a href="dashboard.html">📊 Dashboard</a>
+  <a href="crop-prediction.html">🤖 Crop AI</a>
+  <a href="disease-prediction.html">🔬 Disease AI</a>
+  <a href="weather.html">🌦️ Weather</a>
+  <a href="market-prices.html">💰 Market</a>
+  <a href="schemes.html">🏛️ Schemes</a>
+  <a href="chat.html">💬 Chat</a>
+</nav>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="brand-icon">🌱</div>
+    <span>KrishiSathi <span style="color:var(--gold-300)">India</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="crop-prediction.html">Crop AI</a>
+    <a href="disease-prediction.html">Disease AI</a>
+    <a href="weather.html">Weather</a>
+    <a href="market-prices.html" class="active">Markets</a>
+    <a href="schemes.html">Schemes</a>
+  </div>
+  <div class="nav-cta">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="hi">हिं</button>
+    <a href="dashboard.html" class="btn btn-secondary btn-sm">← Dashboard</a>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-wrapper" style="padding-top:80px">
+<section style="padding:2rem 2rem 5rem">
+  <div class="section-header">
+    <div class="page-icon-badge">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22,50 L78,50 L70,86 Q50,92 30,86 Z" style="fill:var(--gold-400)"/>
+        <path d="M22,50 L78,50 L74,60 L26,60 Z" style="fill:var(--gold-500)"/>
+        <circle cx="38" cy="42" r="9" style="fill:var(--green-400)"/>
+        <circle cx="55" cy="37" r="10" style="fill:var(--green-500)"/>
+        <circle cx="69" cy="44" r="8" style="fill:var(--green-300)"/>
+        <circle cx="78" cy="72" r="15" style="fill:var(--gold-300)"/>
+        <text x="78" y="78" font-size="16" text-anchor="middle" font-weight="800" style="fill:var(--green-900)">₹</text>
+      </svg>
+    </div>
+    <div class="section-tag">💰 Live Mandi Rates</div>
+    <h1 class="section-title">Market <span class="accent">Price Dashboard</span></h1>
+    <p class="section-desc">Real-time crop prices, demand levels and market trends to help you sell at the best time</p>
+  </div>
+
+  <div style="max-width:1100px;margin:0 auto">
+
+    <!-- Filter Bar -->
+    <div style="display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;align-items:center;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:16px;padding:1rem 1.5rem;backdrop-filter:blur(15px)">
+      <select class="form-control" id="market-state-filter" style="max-width:200px">
+        <option value="all">🇮🇳 All India (MSP)</option>
+        <option value="Punjab">Punjab</option>
+        <option value="Maharashtra">Maharashtra</option>
+        <option value="Gujarat">Gujarat</option>
+        <option value="Andhra Pradesh">Andhra Pradesh</option>
+        <option value="Uttar Pradesh">Uttar Pradesh</option>
+        <option value="Rajasthan">Rajasthan</option>
+        <option value="Madhya Pradesh">Madhya Pradesh</option>
+      </select>
+      <button class="btn btn-primary btn-sm" onclick="updatePrices()">🔄 Refresh Prices</button>
+      <div style="margin-left:auto;font-size:0.82rem;color:var(--green-200)">
+        Last updated: <span id="last-updated">Just now</span> &nbsp;|&nbsp;
+        Auto-refresh in <span id="refresh-countdown">30</span>s
+      </div>
+    </div>
+
+    <!-- Price Summary Cards -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:2rem">
+      <div class="price-summary-card" data-crop="rice" style="background:rgba(45,144,80,0.12);border:1px solid rgba(61,185,106,0.25);border-radius:16px;padding:1rem 1.2rem;cursor:pointer;transition:all 0.3s">
+        <div style="font-size:1.8rem">🌾</div>
+        <div style="font-weight:800;font-family:var(--font-display);font-size:1.2rem;color:var(--green-300)" id="card-rice-price">₹2,183</div>
+        <div style="font-size:0.75rem;color:var(--green-200)">Rice /Quintal</div>
+        <div style="font-size:0.78rem;color:var(--green-400);font-weight:700" id="card-rice-change">↑ 1.2%</div>
+      </div>
+      <div class="price-summary-card" data-crop="wheat" style="background:rgba(212,160,23,0.12);border:1px solid rgba(212,160,23,0.25);border-radius:16px;padding:1rem 1.2rem;cursor:pointer;transition:all 0.3s">
+        <div style="font-size:1.8rem">🌽</div>
+        <div style="font-weight:800;font-family:var(--font-display);font-size:1.2rem;color:var(--gold-300)" id="card-wheat-price">₹2,015</div>
+        <div style="font-size:0.75rem;color:var(--green-200)">Wheat /Quintal</div>
+        <div style="font-size:0.78rem;color:var(--green-400);font-weight:700" id="card-wheat-change">↑ 0.8%</div>
+      </div>
+      <div class="price-summary-card" style="background:rgba(255,159,28,0.12);border:1px solid rgba(255,159,28,0.25);border-radius:16px;padding:1rem 1.2rem;cursor:pointer;transition:all 0.3s">
+        <div style="font-size:1.8rem">🌿</div>
+        <div style="font-weight:800;font-family:var(--font-display);font-size:1.2rem;color:var(--amber)" id="card-cotton-price">₹7,020</div>
+        <div style="font-size:0.75rem;color:var(--green-200)">Cotton /Quintal</div>
+        <div style="font-size:0.78rem;color:#ff6b6b;font-weight:700" id="card-cotton-change">↓ 0.3%</div>
+      </div>
+      <div class="price-summary-card" style="background:rgba(0,180,216,0.12);border:1px solid rgba(0,180,216,0.25);border-radius:16px;padding:1rem 1.2rem;cursor:pointer;transition:all 0.3s">
+        <div style="font-size:1.8rem">🧅</div>
+        <div style="font-weight:800;font-family:var(--font-display);font-size:1.2rem;color:var(--sky)" id="card-onion-price">₹1,850</div>
+        <div style="font-size:0.75rem;color:var(--green-200)">Onion /Quintal</div>
+        <div style="font-size:0.78rem;color:var(--green-400);font-weight:700" id="card-onion-change">↑ 3.5%</div>
+      </div>
+      <div class="price-summary-card" style="background:rgba(139,105,20,0.15);border:1px solid rgba(212,160,23,0.2);border-radius:16px;padding:1rem 1.2rem;cursor:pointer;transition:all 0.3s">
+        <div style="font-size:1.8rem">🥜</div>
+        <div style="font-weight:800;font-family:var(--font-display);font-size:1.2rem;color:var(--gold-300)" id="card-groundnut-price">₹5,550</div>
+        <div style="font-size:0.75rem;color:var(--green-200)">Groundnut /Quintal</div>
+        <div style="font-size:0.78rem;color:var(--green-400);font-weight:700" id="card-groundnut-change">↑ 0.9%</div>
+      </div>
+      <div class="price-summary-card" style="background:rgba(61,185,106,0.1);border:1px solid rgba(61,185,106,0.2);border-radius:16px;padding:1rem 1.2rem;cursor:pointer;transition:all 0.3s">
+        <div style="font-size:1.8rem">🫘</div>
+        <div style="font-weight:800;font-family:var(--font-display);font-size:1.2rem;color:var(--green-300)" id="card-dal-price">₹7,400</div>
+        <div style="font-size:0.75rem;color:var(--green-200)">Arhar Dal /Quintal</div>
+        <div style="font-size:0.78rem;color:var(--green-400);font-weight:700" id="card-dal-change">↑ 2.1%</div>
+      </div>
+    </div>
+
+    <!-- Main Price Table -->
+    <div class="market-table-wrap" style="backdrop-filter:blur(15px);background:var(--glass-bg)">
+      <table class="market-table" id="market-table">
+        <thead>
+          <tr>
+            <th>🌾 Crop</th>
+            <th>💰 Price/Quintal</th>
+            <th>🏛️ MSP 2024-25</th>
+            <th>📈 Change (24h)</th>
+            <th>📊 Demand</th>
+            <th>📉 Trend</th>
+            <th>ℹ️ Best Sell Time</th>
+          </tr>
+        </thead>
+        <tbody id="market-tbody">
+          <!-- Populated by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Info Note -->
+    <div style="margin-top:1.2rem;padding:0.9rem 1.2rem;background:rgba(0,180,216,0.08);border:1px solid rgba(0,180,216,0.15);border-radius:12px;font-size:0.83rem;color:var(--green-200);line-height:1.6">
+      ℹ️ <strong>Disclaimer:</strong> Prices shown are indicative based on national average mandi rates. For accurate local prices, visit
+      <a href="https://agmarknet.gov.in" target="_blank" style="color:var(--sky)">agmarknet.gov.in</a> or your nearest APMC mandi.
+      MSP = Minimum Support Price declared by Government of India for 2024-25.
+      For better prices, register on <a href="https://enam.gov.in" target="_blank" style="color:var(--sky)">eNAM (e-National Agriculture Market)</a>.
+    </div>
+
+    <!-- Market Tips -->
+    <div style="margin-top:2rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem">
+      <div style="background:rgba(61,185,106,0.1);border:1px solid rgba(61,185,106,0.2);border-radius:20px;padding:1.5rem">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem">💡</div>
+        <h4 style="font-family:var(--font-display);font-weight:700;margin-bottom:0.5rem;color:var(--green-300)">How to Get Best Price</h4>
+        <ul style="font-size:0.85rem;color:var(--green-200);line-height:1.8">
+          <li>✓ Register on eNAM for wider market reach</li>
+          <li>✓ Join Farmer Producer Organizations (FPO)</li>
+          <li>✓ Store in government warehouses (avoid distress sell)</li>
+          <li>✓ Sell during off-peak season for better rates</li>
+        </ul>
+      </div>
+      <div style="background:rgba(212,160,23,0.1);border:1px solid rgba(212,160,23,0.2);border-radius:20px;padding:1.5rem">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem">🏦</div>
+        <h4 style="font-family:var(--font-display);font-weight:700;margin-bottom:0.5rem;color:var(--gold-300)">Useful Market Links</h4>
+        <ul style="font-size:0.85rem;color:var(--green-200);line-height:1.8">
+          <li>📊 <a href="https://agmarknet.gov.in" target="_blank" style="color:var(--sky)">Agmarknet - National Market</a></li>
+          <li>🛒 <a href="https://enam.gov.in" target="_blank" style="color:var(--sky)">eNAM - e-Trading Platform</a></li>
+          <li>🌾 <a href="https://farmer.gov.in" target="_blank" style="color:var(--sky)">Farmer.gov.in</a></li>
+          <li>💰 <a href="https://dacfw.nic.in" target="_blank" style="color:var(--sky)">Agriculture Ministry</a></li>
+        </ul>
+      </div>
+      <div style="background:rgba(0,180,216,0.1);border:1px solid rgba(0,180,216,0.2);border-radius:20px;padding:1.5rem">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem">📱</div>
+        <h4 style="font-family:var(--font-display);font-weight:700;margin-bottom:0.5rem;color:var(--sky)">Market Helplines</h4>
+        <ul style="font-size:0.85rem;color:var(--green-200);line-height:1.8">
+          <li>📞 eNAM Helpline: 1800-270-0224</li>
+          <li>📞 Farmer Helpline: 1800-180-1551</li>
+          <li>📞 NAFED: 1800-111-470</li>
+          <li>📞 FCI Grain: 1800-180-4566</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-brand" style="margin-bottom:0.5rem;display:inline-flex">
+        <div class="brand-icon">🌱</div>
+        <span>KrishiSathi India</span>
+      </a>
+      <p>AI-powered farming platform built to empower Indian farmers with smart technology, real-time data, and expert guidance — in English and Hindi, on any device.</p>
+      <div class="footer-helpline">
+        <span style="font-size:1.2rem">📞</span>
+        <div>
+          <div style="font-size:0.75rem;color:var(--green-200)">Farmer Helpline (Toll Free)</div>
+          <div class="helpline-num">1800-180-1551</div>
+        </div>
+      </div>
+      <div class="footer-app-hint">
+        📲 <span>Install KrishiSathi as an app for offline access — look for the install prompt on the Home page.</span>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/Itz30jay" target="_blank" class="social-link" title="GitHub" style="text-decoration:none;font-size:1.3rem;">🐙</a>
+        <a href="https://www.instagram.com/jay_dev._._?igsh=MTh1Z3B0eHo3NHdveQ==" target="_blank" class="social-link" title="Instagram" style="text-decoration:none;font-size:1.3rem;">📷</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Farm Tools</h4>
+      <ul>
+        <li><a href="crop-prediction.html">🤖 Crop Prediction</a></li>
+        <li><a href="disease-prediction.html">🔬 Disease Screening</a></li>
+        <li><a href="weather.html">🌦️ Weather Updates</a></li>
+        <li><a href="market-prices.html">💰 Market Prices</a></li>
+        <li><a href="soil-map.html">🗺️ Soil Map</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="schemes.html">🏛️ Govt Schemes</a></li>
+        <li><a href="tips.html">💡 Farming Tips</a></li>
+        <li><a href="chat.html">💬 AI Chat</a></li>
+        <li><a href="voice.html">🎤 Voice Assistant</a></li>
+        <li><a href="dashboard.html">📊 Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">ℹ️ About Us</a></li>
+        <li><a href="contact.html">📞 Contact</a></li>
+        <li><a href="register.html">📝 Register</a></li>
+        <li><a href="login.html">🔐 Login</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Govt Portals</h4>
+      <ul>
+        <li><a href="https://pmkisan.gov.in" target="_blank">PM-KISAN</a></li>
+        <li><a href="https://pmfby.gov.in" target="_blank">PMFBY</a></li>
+        <li><a href="https://enam.gov.in" target="_blank">eNAM</a></li>
+        <li><a href="https://agmarknet.gov.in" target="_blank">Agmarknet</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span class="copy-year">2026</span> KrishiSathi India. All rights reserved.</p>
+    <p class="footer-tagline">🌱 Built to Empower Indian Farmers 🇮🇳</p>
+    <p style="font-size:0.8rem;color:var(--green-200)">Privacy Policy | Terms of Use</p>
+  </div>
+</footer>
+
+<script src="/static/js/script.js"></script>
+<script>
+// Market data with simulation
+const marketData = [
+  { crop:'🌾 Rice (Common)',      price:2183, msp:2183,  change:1.2,  demand:'high',   sellTime:'Post-harvest Oct–Dec' },
+  { crop:'🌾 Rice (Grade A)',     price:2203, msp:2203,  change:1.1,  demand:'high',   sellTime:'Nov–Jan for best rates' },
+  { crop:'🌽 Wheat',              price:2015, msp:2015,  change:0.8,  demand:'high',   sellTime:'Apr–May, before summer' },
+  { crop:'🌽 Maize',              price:1870, msp:1870,  change:-0.5, demand:'medium', sellTime:'Oct–Nov after harvest' },
+  { crop:'🌿 Cotton (Long)',      price:7020, msp:7020,  change:-0.3, demand:'medium', sellTime:'Dec–Feb for higher prices' },
+  { crop:'🌿 Cotton (Medium)',    price:6620, msp:6620,  change:-0.2, demand:'medium', sellTime:'Dec–Jan' },
+  { crop:'🧅 Onion',              price:1850, msp:'N/A', change:3.5,  demand:'high',   sellTime:'Summer (Mar–May) peak' },
+  { crop:'🥔 Potato',             price:1200, msp:'N/A', change:-1.2, demand:'medium', sellTime:'Feb–Apr before monsoon' },
+  { crop:'🍅 Tomato',             price:2500, msp:'N/A', change:5.2,  demand:'high',   sellTime:'Oct–Nov, summer peak' },
+  { crop:'🥜 Groundnut',          price:5550, msp:5550,  change:0.9,  demand:'high',   sellTime:'Dec–Feb for best value' },
+  { crop:'🫘 Arhar Dal (Tur)',    price:7400, msp:7000,  change:2.1,  demand:'high',   sellTime:'Jan–Mar, festival season' },
+  { crop:'🫘 Urad Dal',           price:6950, msp:6950,  change:1.3,  demand:'high',   sellTime:'Nov–Feb' },
+  { crop:'🫘 Moong Dal',          price:8558, msp:8558,  change:0.7,  demand:'high',   sellTime:'Aug–Oct post Kharif' },
+  { crop:'🫘 Chana (Gram)',       price:5440, msp:5440,  change:-0.4, demand:'medium', sellTime:'Mar–Apr post Rabi' },
+  { crop:'🫘 Soybean',            price:4600, msp:4600,  change:0.4,  demand:'medium', sellTime:'Dec–Feb' },
+  { crop:'🎋 Sugarcane',          price: 315, msp: 315,  change:0.0,  demand:'high',   sellTime:'Oct–Mar crushing season' },
+  { crop:'🌻 Sunflower',          price:5800, msp:5800,  change:1.5,  demand:'medium', sellTime:'Apr–Jun' },
+  { crop:'🌿 Mustard',            price:5650, msp:5650,  change:0.6,  demand:'medium', sellTime:'Mar–May' },
+];
+
+let priceVariation = 0;
+
+function updatePrices() {
+  const tbody = document.getElementById('market-tbody');
+  if (!tbody) return;
+  priceVariation = (Math.random() - 0.5) * 0.4; // ±0.2% variation per refresh
+
+  tbody.innerHTML = marketData.map(item => {
+    const adjustedPrice = typeof item.price === 'number'
+      ? Math.round(item.price * (1 + priceVariation / 100))
+      : item.price;
+
+    const adjustedChange = item.change + priceVariation;
+    const changeColor = adjustedChange > 0 ? 'var(--green-400)' : adjustedChange < 0 ? '#ff6b6b' : 'var(--gold-300)';
+    const changeArrow = adjustedChange > 0 ? '↑' : adjustedChange < 0 ? '↓' : '→';
+
+    const demandHtml = {
+      high:   '<span class="demand-badge demand-high">High</span>',
+      medium: '<span class="demand-badge demand-medium">Medium</span>',
+      low:    '<span class="demand-badge demand-low">Low</span>'
+    }[item.demand];
+
+    const trendIcon = adjustedChange > 1 ? '📈 Rising' : adjustedChange < -1 ? '📉 Falling' : '➡️ Stable';
+
+    return `<tr>
+      <td style="font-weight:700">${item.crop}</td>
+      <td style="font-weight:800;color:var(--green-300);font-family:var(--font-display)">₹${adjustedPrice.toLocaleString('en-IN')}</td>
+      <td style="color:var(--green-200)">${typeof item.msp === 'number' ? '₹' + item.msp.toLocaleString('en-IN') : item.msp}</td>
+      <td style="color:${changeColor};font-weight:700">${changeArrow} ${Math.abs(adjustedChange).toFixed(1)}%</td>
+      <td>${demandHtml}</td>
+      <td style="font-size:0.85rem">${trendIcon}</td>
+      <td style="font-size:0.8rem;color:var(--green-200)">${item.sellTime}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('last-updated').textContent = new Date().toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+
+// Auto-refresh countdown
+let countdown = 30;
+setInterval(() => {
+  countdown--;
+  const el = document.getElementById('refresh-countdown');
+  if (el) el.textContent = countdown;
+  if (countdown <= 0) {
+    countdown = 30;
+    updatePrices();
+  }
+}, 1000);
+
+// Card hover effect
+document.querySelectorAll('.price-summary-card').forEach(card => {
+  card.addEventListener('mouseenter', () => {
+    card.style.transform = 'translateY(-4px)';
+    card.style.boxShadow = '0 8px 30px rgba(61,185,106,0.2)';
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+    card.style.boxShadow = '';
+  });
+});
+
+// Initialize
+document.addEventListener('DOMContentLoaded', updatePrices);
+</script>
+</body>
+</html>

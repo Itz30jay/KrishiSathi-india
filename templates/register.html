@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - KrishiSathi India</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+  <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a2e1a">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<nav class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-close" id="mobile-close">✕</button>
+  <a href="index.html">🏠 Home</a>
+  <a href="login.html">🔑 Login</a>
+  <a href="register.html" class="active">📝 Register</a>
+  <a href="contact.html">📞 Contact</a>
+</nav>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="brand-icon">🌱</div>
+    <span>KrishiSathi <span style="color:var(--gold-300)">India</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+  </div>
+  <div class="nav-cta">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="hi">हिं</button>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-wrapper">
+<div class="auth-page">
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="logo-icon">🌱</div>
+        <h1>Join KrishiSathi India</h1>
+        <p>Create your free farmer account</p>
+      </div>
+
+      <div id="register-alert"></div>
+
+      <form id="register-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <div class="input-icon-wrap">
+              <span class="icon">👤</span>
+              <input type="text" class="form-control" id="reg-name" placeholder="Your full name" required>
+            </div>
+            <div class="form-error" id="err-name">Please enter your full name</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mobile Number *</label>
+            <div class="input-icon-wrap">
+              <span class="icon">📱</span>
+              <input type="tel" class="form-control" id="reg-mobile" placeholder="10-digit mobile" maxlength="10" required>
+            </div>
+            <div class="form-error" id="err-mobile">Enter valid 10-digit mobile</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email Address *</label>
+          <div class="input-icon-wrap">
+            <span class="icon">✉️</span>
+            <input type="email" class="form-control" id="reg-email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-error" id="err-email">Enter a valid email address</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">State *</label>
+            <select class="form-control" id="reg-state" required>
+              <option value="">Select State</option>
+              <option>Andhra Pradesh</option><option>Assam</option><option>Bihar</option>
+              <option>Chhattisgarh</option><option>Gujarat</option><option>Haryana</option>
+              <option>Himachal Pradesh</option><option>Jharkhand</option><option>Karnataka</option>
+              <option>Kerala</option><option>Madhya Pradesh</option><option>Maharashtra</option>
+              <option>Odisha</option><option>Punjab</option><option>Rajasthan</option>
+              <option>Tamil Nadu</option><option>Telangana</option><option>Uttar Pradesh</option>
+              <option>Uttarakhand</option><option>West Bengal</option><option>Other</option>
+            </select>
+            <div class="form-error" id="err-state">Please select your state</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">District *</label>
+            <input type="text" class="form-control" id="reg-district" placeholder="Your district" required>
+            <div class="form-error" id="err-district">Please enter your district</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Password *</label>
+            <div class="input-icon-wrap">
+              <span class="icon">🔒</span>
+              <input type="password" class="form-control" id="reg-password" placeholder="Min 8 characters" required>
+              <button type="button" class="password-toggle" onclick="togglePass('reg-password',this)">👁️</button>
+            </div>
+            <div class="form-error" id="err-password">Password must be at least 8 characters</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirm Password *</label>
+            <div class="input-icon-wrap">
+              <span class="icon">🔒</span>
+              <input type="password" class="form-control" id="reg-confirm" placeholder="Repeat password" required>
+              <button type="button" class="password-toggle" onclick="togglePass('reg-confirm',this)">👁️</button>
+            </div>
+            <div class="form-error" id="err-confirm">Passwords do not match</div>
+          </div>
+        </div>
+
+        <div class="form-group" style="display:flex;align-items:flex-start;gap:0.6rem;margin-top:0.5rem">
+          <input type="checkbox" id="reg-terms" style="margin-top:2px;accent-color:var(--green-400)">
+          <label for="reg-terms" style="font-size:0.85rem;color:var(--green-200);cursor:pointer">
+            I agree to the <a href="#" style="color:var(--green-300)">Terms of Service</a> and <a href="#" style="color:var(--green-300)">Privacy Policy</a>
+          </label>
+        </div>
+        <div class="form-error" id="err-terms">Please accept terms to continue</div>
+
+        <button type="submit" class="btn btn-primary btn-full mt-2" id="reg-btn">
+          🌱 Create Free Account
+        </button>
+      </form>
+
+      <div class="auth-link">
+        Already have an account? <a href="login.html">Login here</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-brand" style="margin-bottom:0.5rem;display:inline-flex">
+        <div class="brand-icon">🌱</div>
+        <span>KrishiSathi India</span>
+      </a>
+      <p>AI-powered farming platform built to empower Indian farmers with smart technology, real-time data, and expert guidance — in English and Hindi, on any device.</p>
+      <div class="footer-helpline">
+        <span style="font-size:1.2rem">📞</span>
+        <div>
+          <div style="font-size:0.75rem;color:var(--green-200)">Farmer Helpline (Toll Free)</div>
+          <div class="helpline-num">1800-180-1551</div>
+        </div>
+      </div>
+      <div class="footer-app-hint">
+        📲 <span>Install KrishiSathi as an app for offline access — look for the install prompt on the Home page.</span>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/Itz30jay" target="_blank" class="social-link" title="GitHub" style="text-decoration:none;font-size:1.3rem;">🐙</a>
+        <a href="https://www.instagram.com/jay_dev._._?igsh=MTh1Z3B0eHo3NHdveQ==" target="_blank" class="social-link" title="Instagram" style="text-decoration:none;font-size:1.3rem;">📷</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Farm Tools</h4>
+      <ul>
+        <li><a href="crop-prediction.html">🤖 Crop Prediction</a></li>
+        <li><a href="disease-prediction.html">🔬 Disease Screening</a></li>
+        <li><a href="weather.html">🌦️ Weather Updates</a></li>
+        <li><a href="market-prices.html">💰 Market Prices</a></li>
+        <li><a href="soil-map.html">🗺️ Soil Map</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="schemes.html">🏛️ Govt Schemes</a></li>
+        <li><a href="tips.html">💡 Farming Tips</a></li>
+        <li><a href="chat.html">💬 AI Chat</a></li>
+        <li><a href="voice.html">🎤 Voice Assistant</a></li>
+        <li><a href="dashboard.html">📊 Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">ℹ️ About Us</a></li>
+        <li><a href="contact.html">📞 Contact</a></li>
+        <li><a href="register.html">📝 Register</a></li>
+        <li><a href="login.html">🔐 Login</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Govt Portals</h4>
+      <ul>
+        <li><a href="https://pmkisan.gov.in" target="_blank">PM-KISAN</a></li>
+        <li><a href="https://pmfby.gov.in" target="_blank">PMFBY</a></li>
+        <li><a href="https://enam.gov.in" target="_blank">eNAM</a></li>
+        <li><a href="https://agmarknet.gov.in" target="_blank">Agmarknet</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span class="copy-year">2026</span> KrishiSathi India. All rights reserved.</p>
+    <p class="footer-tagline">🌱 Built to Empower Indian Farmers 🇮🇳</p>
+    <p style="font-size:0.8rem;color:var(--green-200)">Privacy Policy | Terms of Use</p>
+  </div>
+</footer>
+
+<script src="/static/js/script.js"></script>
+<script>
+function togglePass(id, btn) {
+  const inp = document.getElementById(id);
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  btn.textContent = inp.type === 'password' ? '👁️' : '🙈';
+}
+
+document.getElementById('register-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  let valid = true;
+
+  const name = document.getElementById('reg-name').value.trim();
+  const mobile = document.getElementById('reg-mobile').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const state = document.getElementById('reg-state').value;
+  const district = document.getElementById('reg-district').value.trim();
+  const password = document.getElementById('reg-password').value;
+  const confirm = document.getElementById('reg-confirm').value;
+  const terms = document.getElementById('reg-terms').checked;
+
+  const showErr = (id, show) => {
+    document.getElementById(id).classList.toggle('show', show);
+  };
+
+  if (name.length < 2) { showErr('err-name', true); valid = false; } else showErr('err-name', false);
+  if (!/^[6-9]\d{9}$/.test(mobile)) { showErr('err-mobile', true); valid = false; } else showErr('err-mobile', false);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('err-email', true); valid = false; } else showErr('err-email', false);
+  if (!state) { showErr('err-state', true); valid = false; } else showErr('err-state', false);
+  if (!district) { showErr('err-district', true); valid = false; } else showErr('err-district', false);
+  if (password.length < 8) { showErr('err-password', true); valid = false; } else showErr('err-password', false);
+  if (password !== confirm) { showErr('err-confirm', true); valid = false; } else showErr('err-confirm', false);
+  if (!terms) { showErr('err-terms', true); valid = false; } else showErr('err-terms', false);
+
+  if (!valid) return;
+
+  const btn = document.getElementById('reg-btn');
+  btn.innerHTML = '⏳ Creating Account...';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    const user = { name, mobile, email, state, district };
+    localStorage.setItem('agro-user', JSON.stringify(user));
+    localStorage.setItem('agro-registered', JSON.stringify({...user, password}));
+
+    const alert = document.getElementById('register-alert');
+    alert.innerHTML = '<div class="alert alert-success">✅ Account created successfully! Redirecting to dashboard...</div>';
+
+    setTimeout(() => window.location.href = 'dashboard.html', 1500);
+  }, 1500);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soil Map - KrishiSathi India</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+  <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a2e1a">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<nav class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-close" id="mobile-close">✕</button>
+  <a href="index.html">🏠 Home</a>
+  <a href="dashboard.html">📊 Dashboard</a>
+  <a href="crop-prediction.html">🤖 Crop AI</a>
+  <a href="disease-prediction.html">🔬 Disease AI</a>
+  <a href="soil-map.html">🗺️ Soil Map</a>
+  <a href="market-prices.html">💰 Market</a>
+</nav>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="brand-icon">🌱</div>
+    <span>KrishiSathi <span style="color:var(--gold-300)">India</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="crop-prediction.html">Crop AI</a>
+    <a href="disease-prediction.html">Disease AI</a>
+    <a href="soil-map.html" class="active">Soil Map</a>
+    <a href="market-prices.html">Markets</a>
+  </div>
+  <div class="nav-cta">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="hi">हिं</button>
+    <a href="dashboard.html" class="btn btn-secondary btn-sm">← Dashboard</a>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-wrapper" style="padding-top:80px">
+<section style="padding:2rem 2rem 5rem">
+  <div class="section-header">
+    <div class="page-icon-badge">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="33" width="80" height="15" style="fill:var(--green-600)"/>
+        <rect x="10" y="48" width="80" height="15" style="fill:var(--gold-500)"/>
+        <rect x="10" y="63" width="80" height="17" style="fill:#8a5a2b"/>
+        <path d="M50,16 L50,33 M50,33 Q41,44 37,55 M50,33 Q59,47 63,60" stroke="var(--green-300)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="section-tag">🗺️ Soil Information</div>
+    <h1 class="section-title">Soil Map of <span class="accent">India</span></h1>
+    <p class="section-desc">Explore India's major soil types, their characteristics, suitable crops, and fertilizer recommendations</p>
+  </div>
+
+  <div style="max-width:1200px;margin:0 auto">
+
+    <!-- India Map Visual (SVG representation) -->
+    <div style="background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:24px;padding:2rem;backdrop-filter:blur(15px);margin-bottom:3rem;text-align:center">
+      <h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:1.5rem;color:var(--green-300)">
+        🗺️ Soil Distribution Map of India
+      </h3>
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-bottom:1.5rem">
+        <div onclick="scrollToSoil('alluvial')" style="cursor:pointer;padding:0.5rem 1rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:rgba(180,140,90,0.3);border:2px solid rgba(180,140,90,0.5);transition:all 0.2s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">🟤 Alluvial Soil</div>
+        <div onclick="scrollToSoil('black')" style="cursor:pointer;padding:0.5rem 1rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:rgba(60,60,80,0.5);border:2px solid rgba(100,100,120,0.5);transition:all 0.2s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">⚫ Black Soil</div>
+        <div onclick="scrollToSoil('red')" style="cursor:pointer;padding:0.5rem 1rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:rgba(180,60,60,0.3);border:2px solid rgba(200,80,80,0.5);transition:all 0.2s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">🔴 Red Soil</div>
+        <div onclick="scrollToSoil('laterite')" style="cursor:pointer;padding:0.5rem 1rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:rgba(200,120,50,0.3);border:2px solid rgba(200,120,50,0.5);transition:all 0.2s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">🟠 Laterite Soil</div>
+        <div onclick="scrollToSoil('sandy')" style="cursor:pointer;padding:0.5rem 1rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:rgba(200,190,140,0.3);border:2px solid rgba(200,190,140,0.5);transition:all 0.2s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">🟡 Sandy Soil</div>
+        <div onclick="scrollToSoil('mountain')" style="cursor:pointer;padding:0.5rem 1rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:rgba(120,160,200,0.2);border:2px solid rgba(120,160,200,0.4);transition:all 0.2s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">🔵 Mountain Soil</div>
+      </div>
+
+      <!-- SVG India Map simplified -->
+      <svg viewBox="0 0 400 450" style="max-width:350px;width:100%;filter:drop-shadow(0 10px 30px rgba(0,0,0,0.5))">
+        <!-- Rough India silhouette with colored soil regions -->
+        <defs>
+          <radialGradient id="alluvialGrad" cx="50%" cy="30%" r="60%">
+            <stop offset="0%" style="stop-color:rgba(180,140,90,0.8)"/>
+            <stop offset="100%" style="stop-color:rgba(140,100,60,0.4)"/>
+          </radialGradient>
+        </defs>
+        <!-- Background -->
+        <rect width="400" height="450" fill="rgba(10,46,26,0.3)" rx="20"/>
+        <!-- Alluvial belt (North India) -->
+        <ellipse cx="200" cy="130" rx="160" ry="55" fill="rgba(180,140,90,0.5)" stroke="rgba(180,140,90,0.8)" stroke-width="1.5" opacity="0.8"/>
+        <text x="200" y="135" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="10" font-weight="bold">Alluvial (Indo-Gangetic)</text>
+        <!-- Black soil (Deccan) -->
+        <ellipse cx="175" cy="250" rx="110" ry="65" fill="rgba(60,60,80,0.6)" stroke="rgba(100,100,130,0.8)" stroke-width="1.5" opacity="0.8"/>
+        <text x="175" y="255" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="10" font-weight="bold">Black Soil (Deccan)</text>
+        <!-- Red soil (South) -->
+        <ellipse cx="200" cy="355" rx="90" ry="55" fill="rgba(180,60,60,0.5)" stroke="rgba(200,80,80,0.8)" stroke-width="1.5" opacity="0.8"/>
+        <text x="200" y="360" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="10" font-weight="bold">Red Soil (S. India)</text>
+        <!-- Sandy (Rajasthan) -->
+        <ellipse cx="80" cy="200" rx="50" ry="60" fill="rgba(200,190,140,0.5)" stroke="rgba(200,190,140,0.8)" stroke-width="1.5" opacity="0.8"/>
+        <text x="80" y="205" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="9" font-weight="bold">Sandy</text>
+        <!-- Laterite (East) -->
+        <ellipse cx="320" cy="260" rx="50" ry="60" fill="rgba(200,120,50,0.5)" stroke="rgba(200,120,50,0.8)" stroke-width="1.5" opacity="0.8"/>
+        <text x="320" y="265" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="9" font-weight="bold">Laterite</text>
+        <!-- Mountain (North border) -->
+        <ellipse cx="200" cy="60" rx="160" ry="30" fill="rgba(120,160,200,0.3)" stroke="rgba(120,160,200,0.6)" stroke-width="1.5" opacity="0.8"/>
+        <text x="200" y="65" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="9" font-weight="bold">Mountain Soil (Himalayas)</text>
+        <!-- India outline rough -->
+        <path d="M 100 40 Q 200 20 300 40 Q 360 80 370 150 Q 380 200 360 240 Q 340 280 320 320 Q 280 370 240 410 Q 220 430 200 440 Q 180 430 160 410 Q 130 380 110 350 Q 80 300 70 250 Q 50 180 60 130 Q 70 80 100 40 Z" fill="none" stroke="rgba(61,185,106,0.5)" stroke-width="2.5"/>
+      </svg>
+    </div>
+
+    <!-- Soil Cards -->
+    <div class="soil-grid">
+
+      <!-- Alluvial Soil -->
+      <div class="soil-card soil-alluvial" id="alluvial">
+        <div class="soil-indicator"></div>
+        <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:0.8rem">
+          <span style="font-size:2.5rem">🟤</span>
+          <div>
+            <h3>Alluvial Soil</h3>
+            <span style="font-size:0.78rem;color:var(--green-200)">जलोढ़ मिट्टी | Most Fertile</span>
+          </div>
+        </div>
+        <p style="font-size:0.88rem;color:var(--green-200);line-height:1.6;margin-bottom:0.8rem">
+          Found in the Indo-Gangetic plains — the most fertile and agriculturally important soil in India.
+          Covers 43% of total land area.
+        </p>
+        <div style="font-size:0.8rem;font-weight:700;color:var(--green-300);margin-bottom:0.4rem">📍 Found In:</div>
+        <p style="font-size:0.82rem;color:var(--green-200);margin-bottom:0.8rem">Punjab, Haryana, UP, Bihar, West Bengal, Assam, River deltas of AP & Odisha</p>
+        <div style="background:rgba(255,255,255,0.05);border-radius:12px;padding:0.8rem;margin-bottom:0.8rem">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--green-300);margin-bottom:0.3rem">⚗️ Characteristics:</div>
+          <div style="font-size:0.8rem;color:var(--green-100);line-height:1.7">
+            • Rich in potash, phosphoric acid<br>
+            • pH: 7.0–8.5 (slightly alkaline)<br>
+            • High water retention capacity<br>
+            • Sandy loam to clay texture<br>
+            • Low in nitrogen & organic matter
+          </div>
+        </div>
+        <div class="soil-tags">
+          <span class="soil-tag">🌾 Rice</span>
+          <span class="soil-tag">🌽 Wheat</span>
+          <span class="soil-tag">🎋 Sugarcane</span>
+          <span class="soil-tag">🌿 Cotton</span>
+          <span class="soil-tag">🥜 Oilseeds</span>
+          <span class="soil-tag">🌽 Maize</span>
+        </div>
+        <div style="margin-top:0.8rem;padding:0.7rem;background:rgba(61,185,106,0.1);border-radius:10px;font-size:0.8rem;color:var(--green-200)">
+          🧪 <strong>Fertilizer:</strong> Add organic manure & nitrogen. Apply DAP for phosphorus. Zinc sulfate for micro-nutrient deficiency.
+        </div>
+      </div>
+
+      <!-- Black Soil -->
+      <div class="soil-card soil-black" id="black">
+        <div class="soil-indicator"></div>
+        <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:0.8rem">
+          <span style="font-size:2.5rem">⚫</span>
+          <div>
+            <h3>Black Soil (Regur)</h3>
+            <span style="font-size:0.78rem;color:var(--green-200)">काली मिट्टी | Cotton Belt</span>
+          </div>
+        </div>
+        <p style="font-size:0.88rem;color:var(--green-200);line-height:1.6;margin-bottom:0.8rem">
+          Also known as Regur or Cotton Soil. Self-ploughing nature — cracks in dry weather absorbing organic matter.
+          Covers Deccan Plateau.
+        </p>
+        <div style="font-size:0.8rem;font-weight:700;color:var(--green-300);margin-bottom:0.4rem">📍 Found In:</div>
+        <p style="font-size:0.82rem;color:var(--green-200);margin-bottom:0.8rem">Maharashtra, Madhya Pradesh, Gujarat, Andhra Pradesh, Telangana, Karnataka, Chhattisgarh</p>
+        <div style="background:rgba(255,255,255,0.05);border-radius:12px;padding:0.8rem;margin-bottom:0.8rem">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--green-300);margin-bottom:0.3rem">⚗️ Characteristics:</div>
+          <div style="font-size:0.8rem;color:var(--green-100);line-height:1.7">
+            • Rich in lime, iron & magnesium<br>
+            • pH: 6.5–8.0 (slightly acidic to neutral)<br>
+            • High moisture retention (self-mulching)<br>
+            • Cracks deeply in summer heat<br>
+            • Low in phosphorus & nitrogen
+          </div>
+        </div>
+        <div class="soil-tags">
+          <span class="soil-tag">🌿 Cotton</span>
+          <span class="soil-tag">🫘 Soybean</span>
+          <span class="soil-tag">🌻 Sunflower</span>
+          <span class="soil-tag">🌽 Sorghum</span>
+          <span class="soil-tag">🎋 Sugarcane</span>
+          <span class="soil-tag">🌿 Tobacco</span>
+        </div>
+        <div style="margin-top:0.8rem;padding:0.7rem;background:rgba(61,185,106,0.1);border-radius:10px;font-size:0.8rem;color:var(--green-200)">
+          🧪 <strong>Fertilizer:</strong> Apply phosphorus & nitrogen. Avoid excess irrigation. Use gypsum for soil structure improvement.
+        </div>
+      </div>
+
+      <!-- Red Soil -->
+      <div class="soil-card soil-red" id="red">
+        <div class="soil-indicator"></div>
+        <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:0.8rem">
+          <span style="font-size:2.5rem">🔴</span>
+          <div>
+            <h3>Red Soil</h3>
+            <span style="font-size:0.78rem;color:var(--green-200)">लाल मिट्टी | Peninsular India</span>
+          </div>
+        </div>
+        <p style="font-size:0.88rem;color:var(--green-200);line-height:1.6;margin-bottom:0.8rem">
+          Red color due to iron oxide content. Found in the peninsular regions of India on crystalline
+          and metamorphic rocks.
+        </p>
+        <div style="font-size:0.8rem;font-weight:700;color:var(--green-300);margin-bottom:0.4rem">📍 Found In:</div>
+        <p style="font-size:0.82rem;color:var(--green-200);margin-bottom:0.8rem">Tamil Nadu, Karnataka, Andhra Pradesh, Odisha, Chhattisgarh, Jharkhand, parts of Maharashtra & MP</p>
+        <div style="background:rgba(255,255,255,0.05);border-radius:12px;padding:0.8rem;margin-bottom:0.8rem">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--green-300);margin-bottom:0.3rem">⚗️ Characteristics:</div>
+          <div style="font-size:0.8rem;color:var(--green-100);line-height:1.7">
+            • Rich in iron, poor in nitrogen<br>
+            • pH: 6.0–7.5 (slightly acidic)<br>
+            • Low water retention<br>
+            • Porous, friable texture<br>
+            • Deficient in lime, phosphorus & humus
+          </div>
+        </div>
+        <div class="soil-tags">
+          <span class="soil-tag">🥜 Groundnut</span>
+          <span class="soil-tag">🌾 Millets</span>
+          <span class="soil-tag">🫘 Pulses</span>
+          <span class="soil-tag">🥔 Potato</span>
+          <span class="soil-tag">🌽 Maize</span>
+          <span class="soil-tag">🌿 Tobacco</span>
+        </div>
+        <div style="margin-top:0.8rem;padding:0.7rem;background:rgba(61,185,106,0.1);border-radius:10px;font-size:0.8rem;color:var(--green-200)">
+          🧪 <strong>Fertilizer:</strong> Apply FYM/compost, lime to reduce acidity. Add phosphorus & nitrogen. Drip irrigation recommended.
+        </div>
+      </div>
+
+      <!-- Laterite Soil -->
+      <div class="soil-card soil-laterite" id="laterite">
+        <div class="soil-indicator"></div>
+        <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:0.8rem">
+          <span style="font-size:2.5rem">🟠</span>
+          <div>
+            <h3>Laterite Soil</h3>
+            <span style="font-size:0.78rem;color:var(--green-200)">लेटराइट मिट्टी | Tropical Forests</span>
+          </div>
+        </div>
+        <p style="font-size:0.88rem;color:var(--green-200);line-height:1.6;margin-bottom:0.8rem">
+          Formed by intense leaching under tropical rainy conditions. High in iron & aluminum. Poor natural fertility
+          but supports tropical plantation crops.
+        </p>
+        <div style="font-size:0.8rem;font-weight:700;color:var(--green-300);margin-bottom:0.4rem">📍 Found In:</div>
+        <p style="font-size:0.82rem;color:var(--green-200);margin-bottom:0.8rem">Kerala, Karnataka (Western Ghats), Odisha, Assam, Meghalaya, parts of Andhra Pradesh & Tamil Nadu</p>
+        <div style="background:rgba(255,255,255,0.05);border-radius:12px;padding:0.8rem;margin-bottom:0.8rem">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--green-300);margin-bottom:0.3rem">⚗️ Characteristics:</div>
+          <div style="font-size:0.8rem;color:var(--green-100);line-height:1.7">
+            • Rich in iron & aluminum oxides<br>
+            • pH: 5.0–6.5 (acidic)<br>
+            • Very low in N, P, K, Ca, Mg<br>
+            • Coarse texture, poor water holding<br>
+            • Not suitable for cereal crops
+          </div>
+        </div>
+        <div class="soil-tags">
+          <span class="soil-tag">☕ Tea</span>
+          <span class="soil-tag">☕ Coffee</span>
+          <span class="soil-tag">🌴 Rubber</span>
+          <span class="soil-tag">🌿 Cashew</span>
+          <span class="soil-tag">🥥 Coconut</span>
+          <span class="soil-tag">🍍 Pineapple</span>
+        </div>
+        <div style="margin-top:0.8rem;padding:0.7rem;background:rgba(61,185,106,0.1);border-radius:10px;font-size:0.8rem;color:var(--green-200)">
+          🧪 <strong>Fertilizer:</strong> Heavy organic matter addition essential. Apply lime to neutralize acidity. Green manuring with Dhaincha helps.
+        </div>
+      </div>
+
+      <!-- Sandy / Desert Soil -->
+      <div class="soil-card soil-sandy" id="sandy">
+        <div class="soil-indicator"></div>
+        <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:0.8rem">
+          <span style="font-size:2.5rem">🟡</span>
+          <div>
+            <h3>Sandy / Desert Soil</h3>
+            <span style="font-size:0.78rem;color:var(--green-200)">रेतीली मिट्टी | Arid Zones</span>
+          </div>
+        </div>
+        <p style="font-size:0.88rem;color:var(--green-200);line-height:1.6;margin-bottom:0.8rem">
+          Found in arid and semi-arid regions. Very low organic content but good drainage. Requires
+          irrigation and organic matter for cultivation.
+        </p>
+        <div style="font-size:0.8rem;font-weight:700;color:var(--green-300);margin-bottom:0.4rem">📍 Found In:</div>
+        <p style="font-size:0.82rem;color:var(--green-200);margin-bottom:0.8rem">Rajasthan (Thar Desert), Gujarat (Rann of Kutch), parts of Haryana, Punjab & UP</p>
+        <div style="background:rgba(255,255,255,0.05);border-radius:12px;padding:0.8rem;margin-bottom:0.8rem">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--green-300);margin-bottom:0.3rem">⚗️ Characteristics:</div>
+          <div style="font-size:0.8rem;color:var(--green-100);line-height:1.7">
+            • Low organic matter & nutrients<br>
+            • pH: 7.5–9.0 (alkaline)<br>
+            • Very low water retention<br>
+            • High wind erosion risk<br>
+            • Rich in soluble salts & phosphate
+          </div>
+        </div>
+        <div class="soil-tags">
+          <span class="soil-tag">🌾 Millets (Bajra)</span>
+          <span class="soil-tag">🥜 Groundnut</span>
+          <span class="soil-tag">🫘 Pulses</span>
+          <span class="soil-tag">🌵 Cluster bean</span>
+          <span class="soil-tag">🌰 Moth bean</span>
+        </div>
+        <div style="margin-top:0.8rem;padding:0.7rem;background:rgba(61,185,106,0.1);border-radius:10px;font-size:0.8rem;color:var(--green-200)">
+          🧪 <strong>Fertilizer:</strong> Heavy FYM application. Drip irrigation essential. Windbreaks/shelterbelts protect soil. Use gypsum for sodic soils.
+        </div>
+      </div>
+
+      <!-- Mountain/Forest Soil -->
+      <div class="soil-card" style="background:rgba(80,130,180,0.12);border:1px solid rgba(120,160,200,0.2)" id="mountain">
+        <div style="width:60px;height:8px;border-radius:4px;background:linear-gradient(90deg,#78a0c8,#a0c0e8);margin-bottom:1rem"></div>
+        <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:0.8rem">
+          <span style="font-size:2.5rem">🔵</span>
+          <div>
+            <h3>Mountain / Forest Soil</h3>
+            <span style="font-size:0.78rem;color:var(--green-200)">पर्वतीय मिट्टी | Himalayan Belt</span>
+          </div>
+        </div>
+        <p style="font-size:0.88rem;color:var(--green-200);line-height:1.6;margin-bottom:0.8rem">
+          Found in hilly and mountainous regions. Rich in organic matter from forest litter. Ideal for
+          temperate fruits and spices.
+        </p>
+        <div style="font-size:0.8rem;font-weight:700;color:var(--green-300);margin-bottom:0.4rem">📍 Found In:</div>
+        <p style="font-size:0.82rem;color:var(--green-200);margin-bottom:0.8rem">Himachal Pradesh, Uttarakhand, J&amp;K, Northeast India, Nilgiris (Tamil Nadu), Western Ghats</p>
+        <div style="background:rgba(255,255,255,0.05);border-radius:12px;padding:0.8rem;margin-bottom:0.8rem">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--green-300);margin-bottom:0.3rem">⚗️ Characteristics:</div>
+          <div style="font-size:0.8rem;color:var(--green-100);line-height:1.7">
+            • High organic matter (humus-rich)<br>
+            • pH: 5.0–7.0 (acidic to neutral)<br>
+            • Good moisture holding<br>
+            • Rich in N, Ca but low in P & K<br>
+            • Variable texture with altitude
+          </div>
+        </div>
+        <div class="soil-tags">
+          <span class="soil-tag">🍎 Apple</span>
+          <span class="soil-tag">🍑 Peach</span>
+          <span class="soil-tag">☕ Tea</span>
+          <span class="soil-tag">🌿 Spices</span>
+          <span class="soil-tag">🌾 Wheat</span>
+          <span class="soil-tag">🥔 Potato</span>
+        </div>
+        <div style="margin-top:0.8rem;padding:0.7rem;background:rgba(61,185,106,0.1);border-radius:10px;font-size:0.8rem;color:var(--green-200)">
+          🧪 <strong>Fertilizer:</strong> Apply potash & phosphorus. Contour farming prevents erosion. Organic farming works best here.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Soil Test CTA -->
+    <div style="margin-top:3rem;background:linear-gradient(135deg,rgba(45,144,80,0.15),rgba(212,160,23,0.1));border:1px solid rgba(61,185,106,0.2);border-radius:24px;padding:2.5rem;text-align:center">
+      <div style="font-size:2.5rem;margin-bottom:1rem">🧪</div>
+      <h3 style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;margin-bottom:0.8rem">
+        Get Your Free Soil Health Card
+      </h3>
+      <p style="color:var(--green-200);max-width:500px;margin:0 auto 1.5rem;font-size:0.95rem;line-height:1.6">
+        Under the Soil Health Card Scheme, all Indian farmers can get a free soil test report with nutrient status
+        and fertilizer recommendations. Visit your nearest agriculture office or apply online.
+      </p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+        <a href="https://soilhealth.dac.gov.in" target="_blank" class="btn btn-primary">
+          🌐 Apply Online
+        </a>
+        <a href="schemes.html" class="btn btn-secondary">
+          📋 View All Schemes
+        </a>
+      </div>
+      <p style="font-size:0.8rem;color:var(--green-200);margin-top:1rem">
+        📞 Soil Health Card Helpline: 1800-180-1551 (Toll Free)
+      </p>
+    </div>
+
+  </div>
+</section>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-brand" style="margin-bottom:0.5rem;display:inline-flex">
+        <div class="brand-icon">🌱</div>
+        <span>KrishiSathi India</span>
+      </a>
+      <p>AI-powered farming platform built to empower Indian farmers with smart technology, real-time data, and expert guidance — in English and Hindi, on any device.</p>
+      <div class="footer-helpline">
+        <span style="font-size:1.2rem">📞</span>
+        <div>
+          <div style="font-size:0.75rem;color:var(--green-200)">Farmer Helpline (Toll Free)</div>
+          <div class="helpline-num">1800-180-1551</div>
+        </div>
+      </div>
+      <div class="footer-app-hint">
+        📲 <span>Install KrishiSathi as an app for offline access — look for the install prompt on the Home page.</span>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/Itz30jay" target="_blank" class="social-link" title="GitHub" style="text-decoration:none;font-size:1.3rem;">🐙</a>
+        <a href="https://www.instagram.com/jay_dev._._?igsh=MTh1Z3B0eHo3NHdveQ==" target="_blank" class="social-link" title="Instagram" style="text-decoration:none;font-size:1.3rem;">📷</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Farm Tools</h4>
+      <ul>
+        <li><a href="crop-prediction.html">🤖 Crop Prediction</a></li>
+        <li><a href="disease-prediction.html">🔬 Disease Screening</a></li>
+        <li><a href="weather.html">🌦️ Weather Updates</a></li>
+        <li><a href="market-prices.html">💰 Market Prices</a></li>
+        <li><a href="soil-map.html">🗺️ Soil Map</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="schemes.html">🏛️ Govt Schemes</a></li>
+        <li><a href="tips.html">💡 Farming Tips</a></li>
+        <li><a href="chat.html">💬 AI Chat</a></li>
+        <li><a href="voice.html">🎤 Voice Assistant</a></li>
+        <li><a href="dashboard.html">📊 Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">ℹ️ About Us</a></li>
+        <li><a href="contact.html">📞 Contact</a></li>
+        <li><a href="register.html">📝 Register</a></li>
+        <li><a href="login.html">🔐 Login</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Govt Portals</h4>
+      <ul>
+        <li><a href="https://pmkisan.gov.in" target="_blank">PM-KISAN</a></li>
+        <li><a href="https://pmfby.gov.in" target="_blank">PMFBY</a></li>
+        <li><a href="https://enam.gov.in" target="_blank">eNAM</a></li>
+        <li><a href="https://agmarknet.gov.in" target="_blank">Agmarknet</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span class="copy-year">2026</span> KrishiSathi India. All rights reserved.</p>
+    <p class="footer-tagline">🌱 Built to Empower Indian Farmers 🇮🇳</p>
+    <p style="font-size:0.8rem;color:var(--green-200)">Privacy Policy | Terms of Use</p>
+  </div>
+</footer>
+
+<script src="/static/js/script.js"></script>
+<script>
+function scrollToSoil(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior:'smooth', block:'center' });
+  const el = document.getElementById(id);
+  if (el) {
+    el.style.boxShadow = '0 0 30px rgba(61,185,106,0.5)';
+    el.style.borderColor = 'rgba(61,185,106,0.6)';
+    setTimeout(() => { el.style.boxShadow = ''; el.style.borderColor = ''; }, 2000);
+  }
+}
+</script>
+</body>
+</html>

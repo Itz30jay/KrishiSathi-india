@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Plant Disease Detection - KrishiSathi India</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+  <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a2e1a">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/static/css/style.css"/>
+  <style>
+    /* ── Page Hero — KrishiSathi exact layout with KrishiSathi green palette ── */
+    .page-hero {
+      min-height: 38vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 7rem 2rem 3rem;
+    }
+    .page-hero-content { position: relative; z-index: 2; }
+    .page-hero h1 {
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, #fff 0%, var(--green-300) 50%, var(--green-400) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: .8rem;
+      font-family: var(--font-display);
+    }
+    .page-hero p { color: var(--green-200); font-size: 1.05rem; max-width: 560px; margin: 0 auto; }
+
+    .hero-tag-green {
+      display: inline-block;
+      padding: .35rem 1rem;
+      border-radius: 50px;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(45,144,80,0.45);
+      color: var(--green-300);
+      background: rgba(45,144,80,0.08);
+    }
+
+    /* ── Two-column layout — KrishiSathi exact ─────────────────────────────── */
+    .disease-layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    @media (max-width: 768px) { .disease-layout { grid-template-columns: 1fr; } }
+
+    /* ── Upload Zone — KrishiSathi exact input, green theme ────────────────── */
+    .upload-zone-green {
+      padding: 2.5rem;
+      border-radius: 24px;
+      background: rgba(10, 46, 26, 0.85);
+      border: 2px dashed rgba(45, 144, 80, 0.4);
+      text-align: center;
+      cursor: pointer;
+      transition: all .3s;
+      position: relative;
+    }
+    .upload-zone-green:hover,
+    .upload-zone-green.drag-over {
+      border-color: var(--green-400);
+      background: rgba(45, 144, 80, 0.08);
+      box-shadow: 0 0 30px rgba(45, 144, 80, 0.2);
+    }
+    .upload-icon-big { font-size: 4rem; margin-bottom: 1rem; }
+    .upload-zone-green h3 {
+      font-size: 1.25rem;
+      margin-bottom: .5rem;
+      color: #fff;
+      font-family: var(--font-display);
+    }
+    .upload-zone-green p { color: var(--green-200); font-size: .88rem; }
+
+    #file-input-d { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+
+    #preview-wrap { margin-top: 1.5rem; display: none; position: relative; }
+    #preview-img-d {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 2px solid rgba(45, 144, 80, 0.5);
+    }
+    .preview-badge {
+      position: absolute;
+      top: .5rem;
+      right: .5rem;
+      background: rgba(45, 144, 80, 0.9);
+      color: #fff;
+      font-size: .72rem;
+      padding: .2rem .7rem;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    /* ── Analyze Button — KrishiSathi exact, KrishiSathi green gradient ──── */
+    .btn-analyze-big {
+      margin-top: 1.2rem;
+      width: 100%;
+      padding: 1.05rem;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      font-size: 1.05rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--green-600), var(--green-400));
+      color: #fff;
+      transition: all .3s;
+      box-shadow: 0 0 30px rgba(45, 144, 80, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .6rem;
+      font-family: var(--font-display);
+    }
+    .btn-analyze-big:hover { transform: translateY(-3px); box-shadow: 0 0 50px rgba(45, 144, 80, 0.6); }
+    .btn-analyze-big:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+    /* ── Result Panel — KrishiSathi exact, green theme ─────────────────────── */
+    .disease-result-panel {
+      padding: 2.5rem;
+      border-radius: 24px;
+      background: rgba(10, 46, 26, 0.85);
+      border: 1px solid rgba(45, 144, 80, 0.25);
+      min-height: 460px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .disease-idle-big { text-align: center; color: var(--green-200); }
+    .disease-idle-big .idle-icon-big { font-size: 5rem; opacity: .35; margin-bottom: 1rem; }
+
+    /* ── Spinner — green ─────────────────────────────────────────────────── */
+    .spinner-green {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 3px solid rgba(45, 144, 80, 0.15);
+      border-top-color: var(--green-400);
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1.2rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Result content — KrishiSathi exact ───────────────────────────────── */
+    .dr-name { font-size: 1.6rem; font-weight: 800; color: #fff; margin-bottom: .4rem; font-family: var(--font-display); }
+    .dr-status {
+      display: inline-block;
+      padding: .25rem .9rem;
+      border-radius: 20px;
+      font-size: .78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1.4rem;
+    }
+    .dr-healthy { background: rgba(0,255,136,0.1); color: var(--green-300); border: 1px solid rgba(0,255,136,0.3); }
+    .dr-sick    { background: rgba(255,80,80,0.1); color: #ff7070; border: 1px solid rgba(255,80,80,0.3); }
+
+    .dr-block {
+      background: rgba(45, 144, 80, 0.05);
+      border: 1px solid rgba(45, 144, 80, 0.18);
+      border-radius: 13px;
+      padding: 1rem 1.1rem;
+      margin-bottom: .8rem;
+    }
+    .dr-block label {
+      font-size: .72rem;
+      color: var(--green-300);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: .35rem;
+    }
+    .dr-block p { font-size: .88rem; color: var(--green-100); line-height: 1.65; }
+
+    /* ── Chips — KrishiSathi exact, green palette ──────────────────────────── */
+    .disease-chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .6rem; }
+    .dchip {
+      font-size: .7rem;
+      padding: .2rem .65rem;
+      border-radius: 6px;
+      background: rgba(45, 144, 80, 0.08);
+      border: 1px solid rgba(45, 144, 80, 0.25);
+      color: var(--green-300);
+    }
+
+    /* ── Side cards ──────────────────────────────────────────────────────── */
+    .info-card-d {
+      margin-top: 1.4rem;
+      padding: 1.3rem;
+      border: 1px solid rgba(45, 144, 80, 0.22);
+      border-radius: 14px;
+      background: rgba(10, 46, 26, 0.7);
+    }
+    .model-card-d {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      border: 1px solid rgba(45, 144, 80, 0.22);
+      border-radius: 16px;
+      background: rgba(10, 46, 26, 0.75);
+    }
+
+    .fade-in { animation: fadeInUp .4s ease; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- KrishiSathi India Mobile Nav -->
+<nav class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-close" id="mobile-close">✕</button>
+  <a href="index.html">🏠 Home</a>
+  <a href="dashboard.html">📊 Dashboard</a>
+  <a href="crop-prediction.html">🤖 Crop AI</a>
+  <a href="disease-prediction.html" class="active">🔬 Disease AI</a>
+  <a href="weather.html">🌦️ Weather</a>
+  <a href="market-prices.html">💰 Market</a>
+</nav>
+
+<!-- KrishiSathi Navbar -->
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="brand-icon">🌱</div>
+    <span>KrishiSathi <span style="color:var(--gold-300)">India</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="crop-prediction.html">Crop AI</a>
+    <a href="disease-prediction.html" class="active">Disease AI</a>
+    <a href="weather.html">Weather</a>
+    <a href="market-prices.html">Markets</a>
+    <a href="schemes.html">Schemes</a>
+    <a href="about.html">About</a>
+  </div>
+  <div class="nav-cta">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="hi">हिं</button>
+    <a href="dashboard.html" class="btn btn-secondary btn-sm">← Dashboard</a>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- ══ KrishiSathi Page Hero (EXACT LAYOUT) — green palette ══════════════════ -->
+<div class="page-hero">
+  <div class="page-hero-content">
+    <div class="page-icon-badge">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50,85 C25,85 15,60 22,35 C50,40 60,65 50,85Z" style="fill:var(--green-500)"/>
+        <circle cx="30" cy="35" r="3" style="fill:var(--amber)"/>
+        <circle cx="42" cy="50" r="2.5" style="fill:var(--amber)"/>
+        <circle cx="26" cy="55" r="15" fill="none" stroke="var(--gold-300)" stroke-width="4"/>
+        <line x1="36" y1="65" x2="48" y2="77" stroke="var(--gold-300)" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="hero-tag-green">
+      🔬 AI Visual Screening · 38 Disease Classes
+    </div>
+    <h1>Plant Disease<br/>Detection</h1>
+    <p>Upload a leaf photograph. Our Convolutional Neural Network analyses it and identifies diseases across 14 plant species — with treatment advice.</p>
+  </div>
+</div>
+
+<!-- ══ KrishiSathi Disease Layout — EXACT INPUT MODEL ═══════════════════════ -->
+<div class="disease-layout">
+
+  <!-- LEFT: UPLOAD — KrishiSathi exact -->
+  <div>
+    <div class="upload-zone-green" id="upload-zone-d">
+      <input type="file" id="file-input-d" accept="image/*"/>
+      <div class="upload-icon-big">📷</div>
+      <h3>Drop or Click to Upload</h3>
+      <p>A clear photo of a single plant leaf<br/>JPG / PNG / WEBP · Max 10 MB</p>
+      <div id="preview-wrap">
+        <img id="preview-img-d" src="" alt="Leaf preview"/>
+        <span class="preview-badge">✅ Ready</span>
+      </div>
+    </div>
+
+    <button class="btn-analyze-big" id="analyze-btn" onclick="analyzeDisease()">
+      🔬 Detect Disease
+    </button>
+
+    <!-- Photo Tips — KrishiSathi exact -->
+    <div class="info-card-d">
+      <p style="font-size:.82rem;color:var(--green-300);font-weight:600;margin-bottom:.7rem">📸 Photo Tips for Best Results</p>
+      <ul style="font-size:.8rem;color:var(--green-200);line-height:1.9;padding-left:1rem">
+        <li>Use natural daylight — avoid flash glare</li>
+        <li>Focus clearly on the affected leaf area</li>
+        <li>Keep one leaf per photo</li>
+        <li>Avoid blurry or extremely dark images</li>
+      </ul>
+    </div>
+
+    <!-- Supported plants — KrishiSathi exact -->
+    <div class="info-card-d" style="margin-top:1rem;border-color:rgba(45,144,80,0.15)">
+      <p style="font-size:.78rem;color:var(--green-300);margin-bottom:.6rem">🌿 Supported plants (14 species, 38 classes):</p>
+      <div class="disease-chips">
+        <span class="dchip">🍎 Apple</span>
+        <span class="dchip">🫐 Blueberry</span>
+        <span class="dchip">🍒 Cherry</span>
+        <span class="dchip">🌽 Corn</span>
+        <span class="dchip">🍇 Grape</span>
+        <span class="dchip">🍊 Orange</span>
+        <span class="dchip">🍑 Peach</span>
+        <span class="dchip">🌶 Pepper</span>
+        <span class="dchip">🥔 Potato</span>
+        <span class="dchip">🍓 Strawberry</span>
+        <span class="dchip">🍅 Tomato</span>
+        <span class="dchip">🫘 Soybean</span>
+        <span class="dchip">🌿 Raspberry</span>
+        <span class="dchip">🥒 Squash</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: RESULT — KrishiSathi exact -->
+  <div>
+    <div class="disease-result-panel" id="disease-result-panel">
+      <div class="disease-idle-big">
+        <div class="idle-icon-big">🍃</div>
+        <p style="font-size:.95rem">Upload a leaf image<br/>to begin CNN analysis</p>
+        <p style="font-size:.78rem;margin-top:.5rem;opacity:.6">87,867 training images · 38 classes</p>
+      </div>
+    </div>
+
+    <!-- CNN Architecture card — KrishiSathi exact -->
+    <div class="model-card-d">
+      <h4 style="color:#fff;font-size:.95rem;margin-bottom:1rem;font-family:var(--font-display)">🧠 CNN Architecture</h4>
+      <div style="display:flex;flex-direction:column;gap:.65rem">
+        <div style="display:flex;justify-content:space-between;font-size:.82rem">
+          <span style="color:var(--green-200)">Input size</span>
+          <span style="color:var(--green-300)">100 × 100 px</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:.82rem">
+          <span style="color:var(--green-200)">Layers</span>
+          <span style="color:var(--green-300)">Conv2D × 4 + MaxPool + Dense</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:.82rem">
+          <span style="color:var(--green-200)">Regularisation</span>
+          <span style="color:var(--green-300)">L2 (λ = 0.005)</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:.82rem">
+          <span style="color:var(--green-200)">Training epochs</span>
+          <span style="color:var(--green-300)">80</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:.82rem">
+          <span style="color:var(--green-200)">Test accuracy</span>
+          <span style="color:var(--green-300);font-weight:700">93.61%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:.82rem">
+          <span style="color:var(--green-200)">Training samples</span>
+          <span style="color:var(--green-300)">87,867 images</span>
+        </div>
+      </div>
+      <p style="font-size:.72rem;color:var(--green-200);opacity:.75;margin-top:1rem;line-height:1.6;border-top:1px solid rgba(45,144,80,0.18);padding-top:.8rem">
+        📋 Reference spec for the production CNN (PlantVillage dataset). This build runs a lightweight
+        on-device colour/pattern screener for instant, offline-friendly results — see the notice below each result.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<!-- KrishiSathi Footer -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-brand" style="margin-bottom:0.5rem;display:inline-flex">
+        <div class="brand-icon">🌱</div>
+        <span>KrishiSathi India</span>
+      </a>
+      <p>AI-powered farming platform built to empower Indian farmers with smart technology, real-time data, and expert guidance — in English and Hindi, on any device.</p>
+      <div class="footer-helpline">
+        <span style="font-size:1.2rem">📞</span>
+        <div>
+          <div style="font-size:0.75rem;color:var(--green-200)">Farmer Helpline (Toll Free)</div>
+          <div class="helpline-num">1800-180-1551</div>
+        </div>
+      </div>
+      <div class="footer-app-hint">
+        📲 <span>Install KrishiSathi as an app for offline access — look for the install prompt on the Home page.</span>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/Itz30jay" target="_blank" class="social-link" title="GitHub" style="text-decoration:none;font-size:1.3rem;">🐙</a>
+        <a href="https://www.instagram.com/jay_dev._._?igsh=MTh1Z3B0eHo3NHdveQ==" target="_blank" class="social-link" title="Instagram" style="text-decoration:none;font-size:1.3rem;">📷</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Farm Tools</h4>
+      <ul>
+        <li><a href="crop-prediction.html">🤖 Crop Prediction</a></li>
+        <li><a href="disease-prediction.html">🔬 Disease Screening</a></li>
+        <li><a href="weather.html">🌦️ Weather Updates</a></li>
+        <li><a href="market-prices.html">💰 Market Prices</a></li>
+        <li><a href="soil-map.html">🗺️ Soil Map</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="schemes.html">🏛️ Govt Schemes</a></li>
+        <li><a href="tips.html">💡 Farming Tips</a></li>
+        <li><a href="chat.html">💬 AI Chat</a></li>
+        <li><a href="voice.html">🎤 Voice Assistant</a></li>
+        <li><a href="dashboard.html">📊 Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">ℹ️ About Us</a></li>
+        <li><a href="contact.html">📞 Contact</a></li>
+        <li><a href="register.html">📝 Register</a></li>
+        <li><a href="login.html">🔐 Login</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Govt Portals</h4>
+      <ul>
+        <li><a href="https://pmkisan.gov.in" target="_blank">PM-KISAN</a></li>
+        <li><a href="https://pmfby.gov.in" target="_blank">PMFBY</a></li>
+        <li><a href="https://enam.gov.in" target="_blank">eNAM</a></li>
+        <li><a href="https://agmarknet.gov.in" target="_blank">Agmarknet</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span class="copy-year">2026</span> KrishiSathi India. All rights reserved.</p>
+    <p class="footer-tagline">🌱 Built to Empower Indian Farmers 🇮🇳</p>
+    <p style="font-size:0.8rem;color:var(--green-200)">Privacy Policy | Terms of Use</p>
+  </div>
+</footer>
+
+<!-- KrishiSathi global script (navbar, background image parallax, language toggle, etc.) -->
+<script src="/static/js/script.js"></script>
+<script src="/static/js/disease-scan.js"></script>
+
+<script>
+  /* ── Upload wiring ──────────────────────────────────────────────────────── */
+  document.addEventListener('DOMContentLoaded', () => {
+    const zone = document.getElementById('upload-zone-d');
+    const inp  = document.getElementById('file-input-d');
+
+    inp.addEventListener('change', e => handleDiseaseFile(e.target.files[0]));
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('drag-over');
+      handleDiseaseFile(e.dataTransfer.files[0]);
+    });
+  });
+
+  let selectedDiseaseFile = null;
+
+  function handleDiseaseFile(file) {
+    if (!file || !file.type.startsWith('image/')) {
+      alert('Please upload a valid image.');
+      return;
+    }
+    selectedDiseaseFile = file;
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('preview-img-d').src = e.target.result;
+      document.getElementById('preview-wrap').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  /* ── analyzeDisease — KrishiSathi EXACT logic ──────────────────────────── */
+  async function analyzeDisease() {
+    if (!selectedDiseaseFile) {
+      document.getElementById('disease-result-panel').innerHTML = `
+        <div style="text-align:center;color:#ff8888">
+          <div style="font-size:2.5rem;margin-bottom:1rem">⚠️</div>
+          <p>Please upload a plant leaf image first.</p>
+        </div>`;
+      return;
+    }
+
+    const btn = document.getElementById('analyze-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-green" style="width:20px;height:20px;margin:0 .5rem 0 0;display:inline-block"></span> Analysing…';
+
+    document.getElementById('disease-result-panel').innerHTML = `
+      <div style="text-align:center">
+        <div class="spinner-green"></div>
+        <p style="color:var(--green-300);font-size:.9rem">Scanning leaf colour &amp; spot patterns…</p>
+        <p style="color:var(--green-200);font-size:.78rem;margin-top:.3rem">Analysing this photo across 38 disease classes</p>
+      </div>`;
+
+    const [scan] = await Promise.all([
+      window.DiseaseScan.analyze(document.getElementById('preview-img-d')),
+      new Promise(r => setTimeout(r, 1300)) // brief pause so the result doesn't flash instantly
+    ]);
+    const classId = scan.classId;
+
+    try {
+      const res  = await fetch('/disease_info', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ class_id: classId })
+      });
+      const data = await res.json();
+      btn.disabled = false;
+      btn.innerHTML = '🔬 Detect Disease';
+      if (data.error) { showDiseasePanelError(data.error); return; }
+
+      const statusClass = data.healthy ? 'dr-healthy' : 'dr-sick';
+      const statusText  = data.healthy ? '✅ Healthy Plant' : '⚠️ Disease Detected';
+
+      document.getElementById('disease-result-panel').innerHTML = `
+        <div class="fade-in">
+          <div class="dr-name">${data.disease}</div>
+          <div class="dr-status ${statusClass}">${statusText}</div>
+          <div class="dr-block">
+            <label>💊 Treatment &amp; Remedy</label>
+            <p>${data.remedy}</p>
+          </div>
+          <div class="dr-block">
+            <label>🛡️ Prevention</label>
+            <p>${data.prevention}</p>
+          </div>
+          ${!data.healthy ? `
+          <div class="dr-block">
+            <label>⚡ Severity Level</label>
+            <p>${data.severity} — Act promptly to prevent spread to neighbouring plants.</p>
+          </div>` : ''}
+          <div style="margin-top:1rem;padding:.7rem 1rem;border-radius:10px;
+            background:rgba(45,144,80,0.06);border:1px solid rgba(45,144,80,0.18);
+            font-size:.78rem;color:var(--green-300)">
+            🔎 Visual screening complete · Signal match: ${scan.confidence}%
+          </div>
+          <div style="margin-top:.6rem;padding:.7rem 1rem;border-radius:10px;
+            background:rgba(255,193,7,0.06);border:1px solid rgba(255,193,7,0.18);
+            font-size:.76rem;color:var(--gold-300);line-height:1.6">
+            ℹ️ This is a quick on-device visual screening, not a lab diagnosis. For high-value crops or
+            if you're unsure, confirm with your nearest Krishi Vigyan Kendra or agriculture officer
+            before spending on treatment.
+          </div>
+        </div>`;
+    } catch {
+      btn.disabled = false;
+      btn.innerHTML = '🔬 Detect Disease';
+      showDiseasePanelError('Server not reachable. Make sure app.py is running.');
+    }
+  }
+
+  function showDiseasePanelError(msg) {
+    document.getElementById('disease-result-panel').innerHTML = `
+      <div style="text-align:center;color:#ff8888">
+        <div style="font-size:2.5rem;margin-bottom:1rem">⚠️</div>
+        <p>${msg}</p>
+      </div>`;
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - KrishiSathi India</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+  <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a2e1a">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<nav class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-close" id="mobile-close">✕</button>
+  <a href="index.html">🏠 Home</a>
+  <a href="dashboard.html" class="active">📊 Dashboard</a>
+  <a href="crop-prediction.html">🤖 Crop AI</a>
+  <a href="disease-prediction.html">🔬 Disease AI</a>
+  <a href="weather.html">🌦️ Weather</a>
+  <a href="market-prices.html">💰 Market</a>
+  <a href="schemes.html">🏛️ Schemes</a>
+  <a href="chat.html">💬 Chat</a>
+  <a href="#" onclick="KrishiSathi.logout()">🚪 Logout</a>
+</nav>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="brand-icon">🌱</div>
+    <span>KrishiSathi <span style="color:var(--gold-300)">India</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="crop-prediction.html">Crop AI</a>
+    <a href="disease-prediction.html">Disease AI</a>
+    <a href="weather.html">Weather</a>
+    <a href="market-prices.html">Markets</a>
+    <a href="schemes.html">Schemes</a>
+  </div>
+  <div class="nav-cta">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="hi">हिं</button>
+    <span id="user-name-nav" style="font-size:0.85rem;color:var(--green-300);font-weight:700"></span>
+    <button class="btn btn-secondary btn-sm" onclick="KrishiSathi.logout()">🚪 Logout</button>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-wrapper" style="padding-top:70px">
+
+<!-- Dashboard Header -->
+<div class="dashboard-header">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="user-greeting">
+      <div class="user-avatar">👨‍🌾</div>
+      <div class="greeting-text">
+        <h2 id="greeting-name">Welcome back, Farmer!</h2>
+        <p id="greeting-date">Loading...</p>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:0.5rem">
+        <a href="crop-prediction.html" class="btn btn-primary btn-sm">🤖 AI Predict</a>
+        <a href="chat.html" class="btn btn-secondary btn-sm">💬 Chat</a>
+      </div>
+    </div>
+
+    <!-- Quick weather bar -->
+    <div class="weather-mini-bar">
+      <div class="weather-mini-item">☀️ <strong id="dash-weather">Loading weather...</strong></div>
+      <div class="weather-mini-item">
+        📍 <span id="dash-location">Detecting...</span>
+        <a href="weather.html" title="Not your location? Fix it on the Weather page" style="margin-left:0.3rem;font-size:0.75rem;color:var(--sky);text-decoration:underline">change</a>
+      </div>
+      <div class="weather-mini-item">🌾 Season: <strong id="dash-season">—</strong></div>
+      <div class="weather-mini-item">📅 <span id="dash-time"></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Dashboard Content -->
+<section style="padding:1.5rem 2rem">
+  <div class="container">
+
+    <!-- Quick Stats -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem">
+      <div style="background:rgba(45,144,80,0.15);border:1px solid rgba(61,185,106,0.2);border-radius:16px;padding:1.2rem;text-align:center">
+        <div style="font-size:2rem;margin-bottom:0.3rem">🌾</div>
+        <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:800;color:var(--green-300)">Rice</div>
+        <div style="font-size:0.8rem;color:var(--green-200)">Top Recommended Crop</div>
+      </div>
+      <div style="background:rgba(212,160,23,0.15);border:1px solid rgba(212,160,23,0.2);border-radius:16px;padding:1.2rem;text-align:center">
+        <div style="font-size:2rem;margin-bottom:0.3rem">💰</div>
+        <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:800;color:var(--gold-300)">₹2,015</div>
+        <div style="font-size:0.8rem;color:var(--green-200)">Wheat MSP /Quintal</div>
+      </div>
+      <div style="background:rgba(0,180,216,0.15);border:1px solid rgba(0,180,216,0.2);border-radius:16px;padding:1.2rem;text-align:center">
+        <div style="font-size:2rem;margin-bottom:0.3rem">🌧️</div>
+        <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:800;color:var(--sky)">65%</div>
+        <div style="font-size:0.8rem;color:var(--green-200)">Rain Probability Today</div>
+      </div>
+      <div style="background:rgba(61,185,106,0.1);border:1px solid rgba(61,185,106,0.15);border-radius:16px;padding:1.2rem;text-align:center">
+        <div style="font-size:2rem;margin-bottom:0.3rem">🏛️</div>
+        <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:800;color:var(--green-300)">4</div>
+        <div style="font-size:0.8rem;color:var(--green-200)">Eligible Schemes</div>
+      </div>
+    </div>
+
+    <!-- Feature Cards Grid -->
+    <div class="section-header" style="text-align:left;margin-bottom:1.5rem">
+      <h2 style="font-family:var(--font-display);font-size:1.3rem;font-weight:700">🛠️ Farm Management Tools</h2>
+    </div>
+
+    <div class="dashboard-grid">
+      <a href="crop-prediction.html" class="dash-card">
+        <span class="card-icon">🤖</span>
+        <span class="card-label">Crop Prediction</span>
+      </a>
+      <a href="disease-prediction.html" class="dash-card">
+        <span class="card-icon">🍃</span>
+        <span class="card-label">Disease Detection</span>
+      </a>
+      <a href="weather.html" class="dash-card">
+        <span class="card-icon">🌦️</span>
+        <span class="card-label">Weather</span>
+      </a>
+      <a href="market-prices.html" class="dash-card">
+        <span class="card-icon">💰</span>
+        <span class="card-label">Market Prices</span>
+      </a>
+      <a href="soil-map.html" class="dash-card">
+        <span class="card-icon">🗺️</span>
+        <span class="card-label">Soil Map</span>
+      </a>
+      <a href="schemes.html" class="dash-card">
+        <span class="card-icon">🏛️</span>
+        <span class="card-label">Govt Schemes</span>
+      </a>
+      <a href="tips.html" class="dash-card">
+        <span class="card-icon">💡</span>
+        <span class="card-label">Farming Tips</span>
+      </a>
+      <a href="chat.html" class="dash-card">
+        <span class="card-icon">💬</span>
+        <span class="card-label">Chat Support</span>
+      </a>
+      <a href="voice.html" class="dash-card">
+        <span class="card-icon">🎤</span>
+        <span class="card-label">Voice Assistant</span>
+      </a>
+      <a href="contact.html" class="dash-card">
+        <span class="card-icon">📞</span>
+        <span class="card-label">Contact</span>
+      </a>
+    </div>
+
+    <!-- Recent Alerts -->
+    <div style="margin-top:2rem">
+      <h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:1rem;font-size:1.1rem">
+        🔔 Farming Alerts & Updates
+      </h3>
+      <div style="display:flex;flex-direction:column;gap:0.8rem">
+        <div class="alert alert-warning">⚠️ Pest Alert: Brown Planthopper reported in Punjab rice farms. Apply recommended pesticide within 48hrs.</div>
+        <div class="alert alert-success">✅ PM-KISAN 17th installment (₹2,000) expected to be credited this month. Check your status at pmkisan.gov.in</div>
+        <div class="alert" style="background:rgba(0,180,216,0.1);border:1px solid rgba(0,180,216,0.2);color:var(--sky)">🌧️ Southwest Monsoon arriving in Kharif regions. Start preparatory tillage and seed treatment.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</div>
+
+<!-- Footer shortened for dashboard -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-brand" style="margin-bottom:0.5rem;display:inline-flex">
+        <div class="brand-icon">🌱</div>
+        <span>KrishiSathi India</span>
+      </a>
+      <p>AI-powered farming platform built to empower Indian farmers with smart technology, real-time data, and expert guidance — in English and Hindi, on any device.</p>
+      <div class="footer-helpline">
+        <span style="font-size:1.2rem">📞</span>
+        <div>
+          <div style="font-size:0.75rem;color:var(--green-200)">Farmer Helpline (Toll Free)</div>
+          <div class="helpline-num">1800-180-1551</div>
+        </div>
+      </div>
+      <div class="footer-app-hint">
+        📲 <span>Install KrishiSathi as an app for offline access — look for the install prompt on the Home page.</span>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/Itz30jay" target="_blank" class="social-link" title="GitHub" style="text-decoration:none;font-size:1.3rem;">🐙</a>
+        <a href="https://www.instagram.com/jay_dev._._?igsh=MTh1Z3B0eHo3NHdveQ==" target="_blank" class="social-link" title="Instagram" style="text-decoration:none;font-size:1.3rem;">📷</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Farm Tools</h4>
+      <ul>
+        <li><a href="crop-prediction.html">🤖 Crop Prediction</a></li>
+        <li><a href="disease-prediction.html">🔬 Disease Screening</a></li>
+        <li><a href="weather.html">🌦️ Weather Updates</a></li>
+        <li><a href="market-prices.html">💰 Market Prices</a></li>
+        <li><a href="soil-map.html">🗺️ Soil Map</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="schemes.html">🏛️ Govt Schemes</a></li>
+        <li><a href="tips.html">💡 Farming Tips</a></li>
+        <li><a href="chat.html">💬 AI Chat</a></li>
+        <li><a href="voice.html">🎤 Voice Assistant</a></li>
+        <li><a href="dashboard.html">📊 Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">ℹ️ About Us</a></li>
+        <li><a href="contact.html">📞 Contact</a></li>
+        <li><a href="register.html">📝 Register</a></li>
+        <li><a href="login.html">🔐 Login</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Govt Portals</h4>
+      <ul>
+        <li><a href="https://pmkisan.gov.in" target="_blank">PM-KISAN</a></li>
+        <li><a href="https://pmfby.gov.in" target="_blank">PMFBY</a></li>
+        <li><a href="https://enam.gov.in" target="_blank">eNAM</a></li>
+        <li><a href="https://agmarknet.gov.in" target="_blank">Agmarknet</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span class="copy-year">2026</span> KrishiSathi India. All rights reserved.</p>
+    <p class="footer-tagline">🌱 Built to Empower Indian Farmers 🇮🇳</p>
+    <p style="font-size:0.8rem;color:var(--green-200)">Privacy Policy | Terms of Use</p>
+  </div>
+</footer>
+
+<script src="/static/js/script.js"></script>
+<script src="/static/js/weather.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Load user
+  const user = window.KrishiSathi?.getUser();
+  if (user) {
+    document.getElementById('greeting-name').textContent = `Welcome back, ${user.name}! 👋`;
+    document.getElementById('user-name-nav').textContent = user.name;
+    if (user.district) document.getElementById('dash-location').textContent = `${user.district}, ${user.state}`;
+  }
+
+  // Date/Time
+  const now = new Date();
+  document.getElementById('greeting-date').textContent = now.toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  document.getElementById('dash-time').textContent = now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+
+  // Current agricultural season (Kharif/Rabi/Zaid), computed so it never goes stale
+  const seasonMonth = now.getMonth() + 1;
+  let currentSeason = 'Zaid';
+  if (seasonMonth >= 6 && seasonMonth <= 11) currentSeason = 'Kharif';
+  else if (seasonMonth >= 11 || seasonMonth <= 3) currentSeason = 'Rabi';
+  document.getElementById('dash-season').textContent = `${currentSeason} ${now.getFullYear()}`;
+
+  // Fallback if the live weather API hasn't responded yet (slow/offline connection) —
+  // real data from weather.js will overwrite this the moment it arrives.
+  setTimeout(() => {
+    const dashWeather = document.getElementById('dash-weather');
+    if (dashWeather && dashWeather.textContent === 'Loading weather...') {
+      dashWeather.textContent = '☀️ 32°C — Clear Sky (demo)';
+    }
+    const dashLocation = document.getElementById('dash-location');
+    if (dashLocation && dashLocation.textContent === 'Detecting...') {
+      dashLocation.textContent = 'India';
+    }
+  }, 6000);
+});
+</script>
+</body>
+</html>

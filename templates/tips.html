@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farming Tips - KrishiSathi India</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+  <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a2e1a">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<nav class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-close" id="mobile-close">✕</button>
+  <a href="index.html">🏠 Home</a><a href="dashboard.html">📊 Dashboard</a>
+  <a href="tips.html">💡 Tips</a><a href="chat.html">💬 Chat</a>
+</nav>
+<nav class="navbar">
+  <a href="index.html" class="nav-brand"><div class="brand-icon">🌱</div><span>KrishiSathi <span style="color:var(--gold-300)">India</span></span></a>
+  <div class="nav-links"><a href="index.html">Home</a><a href="dashboard.html">Dashboard</a><a href="crop-prediction.html">Crop AI</a>
+    <a href="disease-prediction.html">Disease AI</a><a href="tips.html" class="active">Tips</a><a href="schemes.html">Schemes</a></div>
+  <div class="nav-cta"><button class="lang-btn" data-lang="en">EN</button><button class="lang-btn" data-lang="hi">हिं</button><a href="dashboard.html" class="btn btn-secondary btn-sm">← Dashboard</a></div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-wrapper" style="padding-top:80px">
+<section style="padding:2rem 2rem 5rem">
+  <div class="section-header">
+    <div class="page-icon-badge">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="40" r="26" style="fill:var(--gold-300)"/>
+        <path d="M40,62 L60,62 L58,72 L42,72Z" style="fill:var(--gold-500)"/>
+        <rect x="42" y="72" width="16" height="6" rx="2" style="fill:var(--green-700)"/>
+        <path d="M50,50 C42,50 39,40 43,32 C52,35 55,44 50,50Z" style="fill:var(--green-500)"/>
+        <g stroke="var(--gold-400)" stroke-width="2.5" stroke-linecap="round">
+          <line x1="50" y1="4" x2="50" y2="12"/>
+          <line x1="20" y1="17" x2="27" y2="24"/>
+          <line x1="80" y1="17" x2="73" y2="24"/>
+        </g>
+      </svg>
+    </div>
+    <div class="section-tag">💡 Expert Advice</div>
+    <h1 class="section-title">Smart <span class="accent">Farming Tips</span></h1>
+    <p class="section-desc">Expert farming techniques to increase yield, reduce costs, and build a sustainable farm</p>
+  </div>
+
+  <div style="max-width:1100px;margin:0 auto">
+    <!-- Category Filter -->
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2rem;justify-content:center">
+      <button onclick="filterTips('all',this)" style="padding:0.5rem 1.2rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:var(--green-600);border:1px solid var(--green-500);color:white;cursor:pointer">All Tips</button>
+      <button onclick="filterTips('organic',this)" style="padding:0.5rem 1.2rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:var(--glass-bg);border:1px solid var(--glass-border);color:var(--green-200);cursor:pointer">🌿 Organic</button>
+      <button onclick="filterTips('pest',this)" style="padding:0.5rem 1.2rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:var(--glass-bg);border:1px solid var(--glass-border);color:var(--green-200);cursor:pointer">🪲 Pest Control</button>
+      <button onclick="filterTips('irrigation',this)" style="padding:0.5rem 1.2rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:var(--glass-bg);border:1px solid var(--glass-border);color:var(--green-200);cursor:pointer">💧 Irrigation</button>
+      <button onclick="filterTips('soil',this)" style="padding:0.5rem 1.2rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:var(--glass-bg);border:1px solid var(--glass-border);color:var(--green-200);cursor:pointer">🌍 Soil Health</button>
+      <button onclick="filterTips('tech',this)" style="padding:0.5rem 1.2rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:var(--glass-bg);border:1px solid var(--glass-border);color:var(--green-200);cursor:pointer">📱 Technology</button>
+    </div>
+
+    <div class="tips-grid" id="tips-grid">
+
+      <!-- Tip Card 1 -->
+      <div class="tip-card" data-category="organic">
+        <div class="tip-img organic">🌿</div>
+        <div class="tip-body">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+            <span style="font-size:0.72rem;padding:0.2rem 0.6rem;border-radius:10px;background:rgba(61,185,106,0.2);color:var(--green-300);font-weight:700">ORGANIC</span>
+          </div>
+          <h3>Start Organic Farming</h3>
+          <p>Transition to organic farming gradually — start with 20% of land. Use vermicompost, neem cake, bio-fertilizers. Get PGS-India certification for 20-30% premium prices.</p>
+          <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--green-300);font-weight:700">
+            💰 Benefit: Up to 30% higher income
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip Card 2 -->
+      <div class="tip-card" data-category="organic">
+        <div class="tip-img organic">♻️</div>
+        <div class="tip-body">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+            <span style="font-size:0.72rem;padding:0.2rem 0.6rem;border-radius:10px;background:rgba(61,185,106,0.2);color:var(--green-300);font-weight:700">ORGANIC</span>
+          </div>
+          <h3>Vermicompost Production</h3>
+          <p>Set up a vermicompost unit with 50 kg earthworms. Feed farm waste (crop residue, cow dung). Produces 2-3 tonnes of compost/month. Saves ₹15,000+ on fertilizers annually.</p>
+          <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--green-300);font-weight:700">
+            💰 Benefit: Save ₹15,000/year on fertilizers
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip Card 3 -->
+      <div class="tip-card" data-category="pest">
+        <div class="tip-img pest">🪲</div>
+        <div class="tip-body">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+            <span style="font-size:0.72rem;padding:0.2rem 0.6rem;border-radius:10px;background:rgba(212,160,23,0.2);color:var(--gold-300);font-weight:700">PEST CONTROL</span>
+          </div>
+          <h3>Integrated Pest Management (IPM)</h3>
+          <p>Combine biological (Trichogramma cards), chemical (minimal), and cultural methods. Install pheromone traps at 5 per acre. Reduces pesticide use by 40-60% with better results.</p>
+          <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--gold-300);font-weight:700">
+            💰 Benefit: 40% reduction in pesticide costs
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip Card 4 -->
+      <div class="tip-card" data-category="pest">
+        <div class="tip-img pest">🌿</div>
+        <div class="tip-body">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+            <span style="font-size:0.72rem;padding:0.2rem 0.6rem;border-radius:10px;background:rgba(212,160,23,0.2);color:var(--gold-300);font-weight:700">PEST CONTROL</span>
+          </div>
+          <h3>Neem-Based Pest Control</h3>
+          <p>Prepare neem spray: 5kg neem leaves in 10L water, boil, strain, dilute 1:20. Apply weekly as preventive treatment. Effective against 200+ pest species naturally.</p>
+          <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--gold-300);font-weight:700">
+            💰 Benefit: Zero cost natural pesticide
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip Card 5 -->
+      <div class="tip-card" data-category="irrigation">
+        <div class="tip-img irrigation">💧</div>
+        <div class="tip-body">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+            <span style="font-size:0.72rem;padding:0.2rem 0.6rem;border-radius:10px;background:rgba(0,180,216,0.2);color:var(--sky);font-weight:700">IRRIGATION</span>
+          </div>
+          <h3>Drip Irrigation Setup</h3>
+          <p>Install drip irrigation with 90% government subsidy (PMKSY). Saves 50% water compared to flood irrigation. Increases yield by 20-30%. Reduces weed growth significantly.</p>
+          <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--sky);font-weight:700">
+            💰 Benefit: 50% water savings + higher yield
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip Card 6 -->
+      <div class="tip-card" data-category="irrigation">
+        <div class="tip-img irrigation">🌧️</div>
+        <div class="tip-body">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+            <span style="font-size:0.72rem;padding:0.2rem 0.6rem;border-radius:10px;background:rgba(0,180,216,0.2);color:var(--sky);font-weight:700">IRRIGATION</span>
+          </div>
+          <h3>Farm Pond Construction</h3>
+          <p>Build a farm pond (60x40x3m) for rainwater harvesting. 50% subsidy available under MNREGA. Stores 7,200 cubic meters — enough for 5 acres for one season.</p>
+          <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--sky);font-weight:700">
+            💰 Benefit: Water security for dry months
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip Card 7 -->
+      <div class="tip-card" data-category="soil">
+        <div class="tip-img soil-imp">🌍</div>
+        <div class="tip-body">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+            <span style="font-size:0.72rem;padding:0.2rem 0.6rem;border-radius:10px;background:rgba(180,120,50,0.2);color:var(--amber);font-weight:700">SOIL HEALTH</span>
+          </div>
+          <h3>Crop Rotation for Soil Health</h3>
+          <p>Follow cereals with legumes: Rice→Pulses→Wheat→Vegetables. Legumes fix 50-100 kg Nitrogen/hectare naturally. Reduces fertilizer requirement by 25% over 3 years.</p>
+          <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--amber);font-weight:700">
+            💰 Benefit: 25% less fertilizer needed
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip Card 8 -->
+      <div class="tip-card" data-category="soil">
+        <div class="tip-img soil-imp">♻️</div>
+        <div class="tip-body">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+            <span style="font-size:0.72rem;padding:0.2rem 0.6rem;border-radius:10px;background:rgba(180,120,50,0.2);color:var(--amber);font-weight:700">SOIL HEALTH</span>
+          </div>
+          <h3>Mulching for Soil Moisture</h3>
+          <p>Apply 5-6 cm mulch (straw, dry leaves, plastic) around crop rows. Reduces water evaporation by 40%, controls weeds, moderates soil temperature, and adds organic matter.</p>
+          <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--amber);font-weight:700">
+            💰 Benefit: 40% less irrigation needed
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip Card 9 -->
+      <div class="tip-card" data-category="tech">
+        <div class="tip-img organic">📱</div>
+        <div class="tip-body">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+            <span style="font-size:0.72rem;padding:0.2rem 0.6rem;border-radius:10px;background:rgba(61,185,106,0.2);color:var(--green-300);font-weight:700">TECHNOLOGY</span>
+          </div>
+          <h3>Digital Farming Apps</h3>
+          <p>Use KrishiSathi AI for crop predictions. Download government apps: Kisan Suvidha, mKisan, Crop Insurance App (AIDE). Register on eNAM for direct market access.</p>
+          <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--green-300);font-weight:700">
+            💰 Benefit: Better prices + government services
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip Card 10 -->
+      <div class="tip-card" data-category="tech">
+        <div class="tip-img organic">🤖</div>
+        <div class="tip-body">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+            <span style="font-size:0.72rem;padding:0.2rem 0.6rem;border-radius:10px;background:rgba(61,185,106,0.2);color:var(--green-300);font-weight:700">TECHNOLOGY</span>
+          </div>
+          <h3>Drone Usage in Farming</h3>
+          <p>Use drones for crop monitoring, pesticide spraying, and yield estimation. Agricultural drones now available on rent at ₹500-800/acre. Sprays 10 acres/hour vs 2 hours manual.</p>
+          <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--green-300);font-weight:700">
+            💰 Benefit: 5x faster spraying, less chemical use
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip Card 11 -->
+      <div class="tip-card" data-category="organic">
+        <div class="tip-img organic">🌾</div>
+        <div class="tip-body">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+            <span style="font-size:0.72rem;padding:0.2rem 0.6rem;border-radius:10px;background:rgba(61,185,106,0.2);color:var(--green-300);font-weight:700">ORGANIC</span>
+          </div>
+          <h3>Intercropping for More Income</h3>
+          <p>Grow two crops simultaneously: Cotton + Urad Dal, Sugarcane + Onion, Maize + Cowpea. Intercropping increases land productivity by 20-40% with minimal extra input.</p>
+          <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--green-300);font-weight:700">
+            💰 Benefit: 20-40% more income from same land
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip Card 12 -->
+      <div class="tip-card" data-category="pest">
+        <div class="tip-img pest">🦜</div>
+        <div class="tip-body">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+            <span style="font-size:0.72rem;padding:0.2rem 0.6rem;border-radius:10px;background:rgba(212,160,23,0.2);color:var(--gold-300);font-weight:700">PEST CONTROL</span>
+          </div>
+          <h3>Bird Perch for Natural Pest Control</h3>
+          <p>Install T-shaped bamboo perches (10-15 per acre) at 1m height in the field. Birds eat stem borers, caterpillars, grasshoppers. Reduces pest damage by 15-20% naturally.</p>
+          <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--gold-300);font-weight:700">
+            💰 Benefit: Free biological pest control
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Quick Tips Banner -->
+    <div style="margin-top:3rem;background:linear-gradient(135deg,rgba(45,144,80,0.15),rgba(0,180,216,0.08));border:1px solid rgba(61,185,106,0.2);border-radius:24px;padding:2rem">
+      <h3 style="font-family:var(--font-display);font-size:1.3rem;font-weight:800;margin-bottom:1.2rem;text-align:center">
+        ⚡ Daily Farming Reminders
+      </h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.8rem">
+        <div style="padding:0.8rem 1rem;background:rgba(255,255,255,0.05);border-radius:12px;font-size:0.85rem;border:1px solid rgba(255,255,255,0.07)">
+          🌅 <strong>Morning:</strong> Inspect crops for pest signs. Water in early morning (5-8 AM) for low evaporation.
+        </div>
+        <div style="padding:0.8rem 1rem;background:rgba(255,255,255,0.05);border-radius:12px;font-size:0.85rem;border:1px solid rgba(255,255,255,0.07)">
+          🌤️ <strong>Afternoon:</strong> Avoid pesticide spraying in peak heat. Record weather & crop observations.
+        </div>
+        <div style="padding:0.8rem 1rem;background:rgba(255,255,255,0.05);border-radius:12px;font-size:0.85rem;border:1px solid rgba(255,255,255,0.07)">
+          🌙 <strong>Evening:</strong> Second watering if needed. Check pheromone traps. Plan next day's activities.
+        </div>
+        <div style="padding:0.8rem 1rem;background:rgba(255,255,255,0.05);border-radius:12px;font-size:0.85rem;border:1px solid rgba(255,255,255,0.07)">
+          📅 <strong>Weekly:</strong> Foliar nutrition spray, field bund inspection, market price check.
+        </div>
+      </div>
+    </div>
+
+    <!-- Ask AgroBot -->
+    <div style="margin-top:2rem;text-align:center">
+      <p style="color:var(--green-200);margin-bottom:1rem">Have a specific farming question? Our AI assistant is here 24/7!</p>
+      <a href="chat.html" class="btn btn-primary btn-lg">💬 Ask AgroBot Now</a>
+    </div>
+
+  </div>
+</section>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-brand" style="margin-bottom:0.5rem;display:inline-flex">
+        <div class="brand-icon">🌱</div>
+        <span>KrishiSathi India</span>
+      </a>
+      <p>AI-powered farming platform built to empower Indian farmers with smart technology, real-time data, and expert guidance — in English and Hindi, on any device.</p>
+      <div class="footer-helpline">
+        <span style="font-size:1.2rem">📞</span>
+        <div>
+          <div style="font-size:0.75rem;color:var(--green-200)">Farmer Helpline (Toll Free)</div>
+          <div class="helpline-num">1800-180-1551</div>
+        </div>
+      </div>
+      <div class="footer-app-hint">
+        📲 <span>Install KrishiSathi as an app for offline access — look for the install prompt on the Home page.</span>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/Itz30jay" target="_blank" class="social-link" title="GitHub" style="text-decoration:none;font-size:1.3rem;">🐙</a>
+        <a href="https://www.instagram.com/jay_dev._._?igsh=MTh1Z3B0eHo3NHdveQ==" target="_blank" class="social-link" title="Instagram" style="text-decoration:none;font-size:1.3rem;">📷</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Farm Tools</h4>
+      <ul>
+        <li><a href="crop-prediction.html">🤖 Crop Prediction</a></li>
+        <li><a href="disease-prediction.html">🔬 Disease Screening</a></li>
+        <li><a href="weather.html">🌦️ Weather Updates</a></li>
+        <li><a href="market-prices.html">💰 Market Prices</a></li>
+        <li><a href="soil-map.html">🗺️ Soil Map</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="schemes.html">🏛️ Govt Schemes</a></li>
+        <li><a href="tips.html">💡 Farming Tips</a></li>
+        <li><a href="chat.html">💬 AI Chat</a></li>
+        <li><a href="voice.html">🎤 Voice Assistant</a></li>
+        <li><a href="dashboard.html">📊 Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">ℹ️ About Us</a></li>
+        <li><a href="contact.html">📞 Contact</a></li>
+        <li><a href="register.html">📝 Register</a></li>
+        <li><a href="login.html">🔐 Login</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Govt Portals</h4>
+      <ul>
+        <li><a href="https://pmkisan.gov.in" target="_blank">PM-KISAN</a></li>
+        <li><a href="https://pmfby.gov.in" target="_blank">PMFBY</a></li>
+        <li><a href="https://enam.gov.in" target="_blank">eNAM</a></li>
+        <li><a href="https://agmarknet.gov.in" target="_blank">Agmarknet</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span class="copy-year">2026</span> KrishiSathi India. All rights reserved.</p>
+    <p class="footer-tagline">🌱 Built to Empower Indian Farmers 🇮🇳</p>
+    <p style="font-size:0.8rem;color:var(--green-200)">Privacy Policy | Terms of Use</p>
+  </div>
+</footer>
+
+<script src="/static/js/script.js"></script>
+<script>
+function filterTips(category, btn) {
+  document.querySelectorAll('button[onclick*="filterTips"]').forEach(b => {
+    b.style.background = 'var(--glass-bg)';
+    b.style.color = 'var(--green-200)';
+    b.style.borderColor = 'var(--glass-border)';
+  });
+  btn.style.background = 'var(--green-600)';
+  btn.style.color = 'white';
+  btn.style.borderColor = 'var(--green-500)';
+
+  document.querySelectorAll('.tip-card').forEach(card => {
+    const show = category === 'all' || card.dataset.category === category;
+    card.style.display = show ? 'block' : 'none';
+    if (show) card.style.animation = 'fadeInUp 0.4s ease';
+  });
+}
+</script>
+</body>
+</html>

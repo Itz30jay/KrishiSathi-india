@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Crop Prediction - KrishiSathi India</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+  <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a2e1a">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/static/css/style.css">
+
+  <!-- KrishiSathi crop page styles — copied exactly from KrishiSathi/templates/crop.html -->
+  <style>
+    .crop-layout {
+      max-width:1100px; margin:0 auto; padding:3rem 2rem 5rem;
+      display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:start;
+    }
+    @media(max-width:768px){ .crop-layout{grid-template-columns:1fr;} }
+
+    /* KrishiSathi form card */
+    .agro-form-card {
+      border-radius:20px; padding:2.5rem;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(61,185,106,0.15);
+    }
+    .agro-form-card h3 {
+      font-size:1.1rem; font-weight:700; margin-bottom:.4rem; color:var(--green-300);
+    }
+    .agro-form-card > p {
+      font-size:.85rem; color:var(--green-200); margin-bottom:1.4rem;
+    }
+
+    /* Quick-fill sample buttons — KrishiSathi */
+    .sample-btn {
+      padding:.3rem .75rem; border-radius:20px; border:1px solid rgba(61,185,106,0.3);
+      background:transparent; color:var(--green-300); font-size:.78rem;
+      cursor:pointer; transition:all .2s;
+    }
+    .sample-btn:hover { background:rgba(61,185,106,0.1); border-color:var(--green-400); }
+
+    /* Input grid — KrishiSathi */
+    .input-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.4rem;
+    }
+    @media(max-width:500px){ .input-grid{grid-template-columns:1fr;} }
+
+    .agro-input-group { display:flex; flex-direction:column; gap:.35rem; }
+    .agro-input-group label {
+      font-size:.8rem; color:var(--green-200); font-weight:500;
+    }
+    .agro-input-group input {
+      background:rgba(255,255,255,0.04); border:1px solid rgba(61,185,106,0.2);
+      border-radius:10px; padding:.6rem .9rem; color:var(--green-100);
+      font-size:.95rem; outline:none; transition:border-color .2s;
+      width:100%;
+    }
+    .agro-input-group input:focus { border-color:var(--green-400); }
+    .agro-input-group input::placeholder { color:rgba(255,255,255,0.2); font-size:.85rem; }
+    .input-hint { font-size:.72rem; color:rgba(255,255,255,0.25); margin-top:.2rem; }
+
+    /* Predict button */
+    .btn-predict {
+      width:100%; padding:1rem; border-radius:14px; border:none; cursor:pointer;
+      font-size:1rem; font-weight:700;
+      background:linear-gradient(135deg, var(--green-400), #1a9e5a);
+      color:#fff; transition:all .3s;
+      box-shadow:0 0 25px rgba(61,185,106,0.3);
+      display:flex; align-items:center; justify-content:center; gap:.5rem;
+    }
+    .btn-predict:hover { transform:translateY(-2px); box-shadow:0 0 40px rgba(61,185,106,0.5); }
+    .btn-predict:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+
+    /* Tech tags */
+    .tech-tags { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.5rem; }
+    .tech-tag {
+      font-size:.7rem; padding:.2rem .65rem; border-radius:6px;
+      background:rgba(61,185,106,0.08); border:1px solid rgba(61,185,106,0.2);
+      color:var(--green-300);
+    }
+
+    /* Result panel — KrishiSathi style */
+    .agro-result-panel {
+      border-radius:20px; padding:2.5rem;
+      background:rgba(255,255,255,0.02);
+      border:1px solid rgba(61,185,106,0.12);
+      min-height:420px; display:flex; flex-direction:column; justify-content:center;
+    }
+    .result-idle { text-align:center; color:var(--green-200); }
+    .idle-icon { font-size:5rem; opacity:.3; margin-bottom:1rem; }
+
+    .spinner {
+      width:44px; height:44px; border-radius:50%;
+      border:3px solid rgba(61,185,106,0.15); border-top-color:var(--green-400);
+      animation:spin 1s linear infinite; margin:0 auto 1.2rem;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    /* Result content — KrishiSathi */
+    .result-content .result-header { text-align:center; margin-bottom:1.5rem; }
+    .result-emoji { font-size:5rem; display:block; margin-bottom:.5rem; }
+    .result-crop-name {
+      font-size:1.8rem; font-weight:800; color:#fff; margin-bottom:.2rem;
+    }
+    .result-label { font-size:.8rem; color:var(--green-300); text-transform:uppercase; letter-spacing:1px; }
+
+    .confidence-bar-wrap { margin-bottom:1.2rem; }
+    .confidence-label {
+      display:flex; justify-content:space-between;
+      font-size:.82rem; color:var(--green-200); margin-bottom:.4rem;
+    }
+    .confidence-bar {
+      height:8px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden;
+    }
+    .confidence-fill {
+      height:100%; width:0; background:var(--green-400);
+      border-radius:4px; transition:width 1s ease;
+    }
+
+    .result-desc {
+      font-size:.88rem; color:var(--green-200); line-height:1.65;
+      padding:1rem; background:rgba(61,185,106,0.05);
+      border:1px solid rgba(61,185,106,0.12); border-radius:12px; margin-bottom:1.2rem;
+    }
+
+    .alternatives h4 {
+      font-size:.9rem; color:var(--green-300); margin-bottom:.7rem; font-weight:700;
+    }
+    .alt-item {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:.55rem .8rem;
+      background:rgba(255,255,255,0.03); border-radius:8px; margin-bottom:.4rem;
+    }
+    .alt-name { font-size:.88rem; color:var(--green-100); }
+    .alt-conf { font-size:.85rem; font-weight:700; color:var(--green-400); }
+
+    /* How it works */
+    .how-card {
+      margin-top:1.5rem; padding:1.5rem;
+      border:1px solid rgba(61,185,106,0.12); border-radius:16px;
+      background:rgba(0,20,10,0.5);
+    }
+    .how-card h4 { color:#fff; font-size:.95rem; margin-bottom:1rem; }
+    .how-step {
+      display:flex; gap:.8rem; align-items:flex-start; margin-bottom:.7rem;
+    }
+    .step-num { color:var(--green-400); font-weight:800; font-size:.85rem; min-width:20px; }
+    .step-txt { color:var(--green-200); font-size:.84rem; line-height:1.5; }
+    .accuracy-badge {
+      margin-top:1rem; padding:.6rem 1rem; border-radius:8px;
+      background:rgba(61,185,106,0.05); border:1px solid rgba(61,185,106,0.1);
+      font-size:.78rem; color:var(--green-400);
+    }
+
+    .fade-in { animation:fadeInUp .4s ease; }
+    @keyframes fadeInUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+  </style>
+</head>
+<body>
+
+<!-- KrishiSathi Mobile Nav — unchanged -->
+<nav class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-close" id="mobile-close">✕</button>
+  <a href="index.html">🏠 Home</a>
+  <a href="dashboard.html">📊 Dashboard</a>
+  <a href="crop-prediction.html" class="active">🤖 Crop AI</a>
+  <a href="disease-prediction.html">🔬 Disease AI</a>
+  <a href="weather.html">🌦️ Weather</a>
+  <a href="market-prices.html">💰 Market</a>
+</nav>
+
+<!-- KrishiSathi Navbar — unchanged -->
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="brand-icon">🌱</div>
+    <span>KrishiSathi <span style="color:var(--gold-300)">India</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="crop-prediction.html" class="active">Crop AI</a>
+    <a href="disease-prediction.html">Disease AI</a>
+    <a href="weather.html">Weather</a>
+    <a href="market-prices.html">Markets</a>
+    <a href="schemes.html">Schemes</a>
+    <a href="about.html">About</a>
+  </div>
+  <div class="nav-cta">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="hi">हिं</button>
+    <a href="dashboard.html" class="btn btn-secondary btn-sm">← Dashboard</a>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-wrapper" style="padding-top:80px">
+<section style="padding:2rem 2rem 1rem">
+  <div class="section-header">
+    <div class="page-icon-badge">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="50" cy="82" rx="32" ry="9" style="fill:var(--green-700)"/>
+        <path d="M50,78 L50,45" stroke="var(--green-500)" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M50,55 C35,55 30,40 35,28 C48,32 52,48 50,55Z" style="fill:var(--green-400)"/>
+        <path d="M50,48 C65,48 70,33 65,21 C52,25 48,41 50,48Z" style="fill:var(--green-300)"/>
+      </svg>
+    </div>
+    <div class="section-tag">🤖 Random Forest · 99.4% Accuracy · 22 Crops</div>
+    <h1 class="section-title">Crop Recommendation <span class="accent">Engine</span></h1>
+    <p class="section-desc">Enter your soil and climate parameters. Our ML model instantly recommends the most suitable crop for maximum yield.</p>
+  </div>
+</section>
+
+<!-- KrishiSathi crop layout — pasted exactly from KrishiSathi/templates/crop.html -->
+<div class="crop-layout">
+
+  <!-- LEFT: INPUT FORM — KrishiSathi, copied exactly -->
+  <div class="agro-form-card">
+    <h3>🧪 Soil &amp; Climate Parameters</h3>
+    <p>Fill all 7 values for your field conditions</p>
+
+    <!-- Sample buttons — KrishiSathi, copied exactly -->
+    <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.4rem">
+      <span style="font-size:.78rem;color:var(--green-200);align-self:center">Quick fill:</span>
+      <button class="sample-btn" onclick="fillSample('rice')"   >🌾 Rice</button>
+      <button class="sample-btn" onclick="fillSample('maize')"  >🌽 Maize</button>
+      <button class="sample-btn" onclick="fillSample('coffee')" >☕ Coffee</button>
+      <button class="sample-btn" onclick="fillSample('apple')"  >🍎 Apple</button>
+      <button class="sample-btn" onclick="fillSample('cotton')" >🌸 Cotton</button>
+      <button class="sample-btn" onclick="fillSample('banana')" >🍌 Banana</button>
+    </div>
+
+    <!-- 7 inputs — KrishiSathi, copied exactly (IDs: N, P, K, temperature, humidity, ph, rainfall) -->
+    <div class="input-grid">
+      <div class="agro-input-group">
+        <label>N — Nitrogen (kg/ha)</label>
+        <input type="number" id="N" placeholder="e.g. 90" min="0" max="200"/>
+        <div class="input-hint">0 – 200</div>
+      </div>
+      <div class="agro-input-group">
+        <label>P — Phosphorus (kg/ha)</label>
+        <input type="number" id="P" placeholder="e.g. 42" min="0" max="200"/>
+        <div class="input-hint">0 – 200</div>
+      </div>
+      <div class="agro-input-group">
+        <label>K — Potassium (kg/ha)</label>
+        <input type="number" id="K" placeholder="e.g. 43" min="0" max="250"/>
+        <div class="input-hint">0 – 250</div>
+      </div>
+      <div class="agro-input-group">
+        <label>Temperature (°C)</label>
+        <input type="number" id="temperature" placeholder="e.g. 23.5" step="0.1"/>
+        <div class="input-hint">0 – 50 °C</div>
+      </div>
+      <div class="agro-input-group">
+        <label>Humidity (%)</label>
+        <input type="number" id="humidity" placeholder="e.g. 80" step="0.1" min="0" max="100"/>
+        <div class="input-hint">0 – 100 %</div>
+      </div>
+      <div class="agro-input-group">
+        <label>Soil pH</label>
+        <input type="number" id="ph" placeholder="e.g. 6.5" step="0.1" min="0" max="14"/>
+        <div class="input-hint">3.5 – 9.5</div>
+      </div>
+      <div class="agro-input-group" style="grid-column:1/-1">
+        <label>Rainfall (mm/year)</label>
+        <input type="number" id="rainfall" placeholder="e.g. 202" step="0.1" min="0"/>
+        <div class="input-hint">Annual rainfall in millimetres</div>
+      </div>
+    </div>
+
+    <button class="btn-predict" id="predict-btn" onclick="predictCrop()">
+      ⚡ Analyse &amp; Predict Best Crop
+    </button>
+
+    <!-- Info strip -->
+    <div style="margin-top:1.5rem;padding:1rem;border:1px solid rgba(61,185,106,0.12);border-radius:12px;background:rgba(61,185,106,0.03)">
+      <p style="font-size:.78rem;color:var(--green-200);margin-bottom:.5rem">📋 Supported crops (22 total):</p>
+      <div class="tech-tags">
+        <span class="tech-tag">Rice</span><span class="tech-tag">Maize</span>
+        <span class="tech-tag">Coffee</span><span class="tech-tag">Apple</span>
+        <span class="tech-tag">Banana</span><span class="tech-tag">Mango</span>
+        <span class="tech-tag">Grapes</span><span class="tech-tag">Cotton</span>
+        <span class="tech-tag">Jute</span><span class="tech-tag">Coconut</span>
+        <span class="tech-tag">Papaya</span><span class="tech-tag">Orange</span>
+        <span class="tech-tag">+10 more</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: RESULT + HOW IT WORKS — KrishiSathi, copied exactly -->
+  <div>
+    <div class="agro-result-panel" id="result-panel">
+      <div class="result-idle">
+        <div class="idle-icon">🌍</div>
+        <p style="font-size:.95rem">Fill in your parameters<br/>and click Predict</p>
+      </div>
+    </div>
+
+    <!-- How it works — KrishiSathi, copied exactly -->
+    <div class="how-card">
+      <h4>⚙️ How it works</h4>
+      <div class="how-step">
+        <span class="step-num">1.</span>
+        <span class="step-txt">Your 7 values are scaled using <strong style="color:var(--green-100)">RobustScaler</strong></span>
+      </div>
+      <div class="how-step">
+        <span class="step-num">2.</span>
+        <span class="step-txt"><strong style="color:var(--green-100)">500 Decision Trees</strong> vote on the best crop</span>
+      </div>
+      <div class="how-step">
+        <span class="step-num">3.</span>
+        <span class="step-txt">Probabilities are ranked → <strong style="color:var(--green-100)">top crop + alternatives</strong> shown</span>
+      </div>
+      <div class="accuracy-badge">
+        ✅ Trained on 2,200 samples · Held-out test accuracy: <strong>99.4%</strong>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- KrishiSathi footer — unchanged -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-brand" style="margin-bottom:0.5rem;display:inline-flex">
+        <div class="brand-icon">🌱</div>
+        <span>KrishiSathi India</span>
+      </a>
+      <p>AI-powered farming platform built to empower Indian farmers with smart technology, real-time data, and expert guidance — in English and Hindi, on any device.</p>
+      <div class="footer-helpline">
+        <span style="font-size:1.2rem">📞</span>
+        <div>
+          <div style="font-size:0.75rem;color:var(--green-200)">Farmer Helpline (Toll Free)</div>
+          <div class="helpline-num">1800-180-1551</div>
+        </div>
+      </div>
+      <div class="footer-app-hint">
+        📲 <span>Install KrishiSathi as an app for offline access — look for the install prompt on the Home page.</span>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/Itz30jay" target="_blank" class="social-link" title="GitHub" style="text-decoration:none;font-size:1.3rem;">🐙</a>
+        <a href="https://www.instagram.com/jay_dev._._?igsh=MTh1Z3B0eHo3NHdveQ==" target="_blank" class="social-link" title="Instagram" style="text-decoration:none;font-size:1.3rem;">📷</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Farm Tools</h4>
+      <ul>
+        <li><a href="crop-prediction.html">🤖 Crop Prediction</a></li>
+        <li><a href="disease-prediction.html">🔬 Disease Screening</a></li>
+        <li><a href="weather.html">🌦️ Weather Updates</a></li>
+        <li><a href="market-prices.html">💰 Market Prices</a></li>
+        <li><a href="soil-map.html">🗺️ Soil Map</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="schemes.html">🏛️ Govt Schemes</a></li>
+        <li><a href="tips.html">💡 Farming Tips</a></li>
+        <li><a href="chat.html">💬 AI Chat</a></li>
+        <li><a href="voice.html">🎤 Voice Assistant</a></li>
+        <li><a href="dashboard.html">📊 Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">ℹ️ About Us</a></li>
+        <li><a href="contact.html">📞 Contact</a></li>
+        <li><a href="register.html">📝 Register</a></li>
+        <li><a href="login.html">🔐 Login</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Govt Portals</h4>
+      <ul>
+        <li><a href="https://pmkisan.gov.in" target="_blank">PM-KISAN</a></li>
+        <li><a href="https://pmfby.gov.in" target="_blank">PMFBY</a></li>
+        <li><a href="https://enam.gov.in" target="_blank">eNAM</a></li>
+        <li><a href="https://agmarknet.gov.in" target="_blank">Agmarknet</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span class="copy-year">2026</span> KrishiSathi India. All rights reserved.</p>
+    <p class="footer-tagline">🌱 Built to Empower Indian Farmers 🇮🇳</p>
+    <p style="font-size:0.8rem;color:var(--green-200)">Privacy Policy | Terms of Use</p>
+  </div>
+</footer>
+
+<script src="/static/js/script.js"></script>
+
+<script src="/static/js/crop-prediction.js"></script>
+</body>
+</html>

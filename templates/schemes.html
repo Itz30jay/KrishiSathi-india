@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Government Schemes - KrishiSathi India</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+  <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a2e1a">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<nav class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-close" id="mobile-close">✕</button>
+  <a href="index.html">🏠 Home</a>
+  <a href="dashboard.html">📊 Dashboard</a>
+  <a href="schemes.html">🏛️ Schemes</a>
+  <a href="market-prices.html">💰 Market</a>
+  <a href="chat.html">💬 Chat</a>
+</nav>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="brand-icon">🌱</div>
+    <span>KrishiSathi <span style="color:var(--gold-300)">India</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="crop-prediction.html">Crop AI</a>
+    <a href="disease-prediction.html">Disease AI</a>
+    <a href="schemes.html" class="active">Schemes</a>
+    <a href="market-prices.html">Markets</a>
+  </div>
+  <div class="nav-cta">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="hi">हिं</button>
+    <a href="dashboard.html" class="btn btn-secondary btn-sm">← Dashboard</a>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-wrapper" style="padding-top:80px">
+<section style="padding:2rem 2rem 5rem">
+  <div class="section-header">
+    <div class="page-icon-badge">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <rect x="24" y="12" width="48" height="72" rx="4" style="fill:var(--green-100)"/>
+        <line x1="32" y1="28" x2="64" y2="28" stroke="var(--green-600)" stroke-width="3"/>
+        <line x1="32" y1="38" x2="64" y2="38" stroke="var(--green-600)" stroke-width="3"/>
+        <line x1="32" y1="48" x2="52" y2="48" stroke="var(--green-600)" stroke-width="3"/>
+        <circle cx="60" cy="68" r="17" style="fill:var(--gold-300)"/>
+        <g stroke="var(--gold-500)" stroke-width="1.5">
+          <line x1="60" y1="54" x2="60" y2="82"/>
+          <line x1="46" y1="68" x2="74" y2="68"/>
+          <line x1="50" y1="58" x2="70" y2="78"/>
+          <line x1="70" y1="58" x2="50" y2="78"/>
+        </g>
+      </svg>
+    </div>
+    <div class="section-tag">🏛️ Government Welfare</div>
+    <h1 class="section-title">Farmer <span class="accent">Schemes & Benefits</span></h1>
+    <p class="section-desc">All important central and state government schemes for Indian farmers — explained clearly with application links</p>
+  </div>
+
+  <!-- Filter tabs -->
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2rem;justify-content:center">
+      <button class="scheme-filter-btn active" data-filter="all" onclick="filterSchemes('all',this)" style="padding:0.5rem 1.2rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:var(--green-600);border:1px solid var(--green-500);color:white;cursor:pointer;transition:all 0.2s">All Schemes</button>
+      <button class="scheme-filter-btn" data-filter="income" onclick="filterSchemes('income',this)" style="padding:0.5rem 1.2rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:var(--glass-bg);border:1px solid var(--glass-border);color:var(--green-200);cursor:pointer;transition:all 0.2s">💰 Income Support</button>
+      <button class="scheme-filter-btn" data-filter="insurance" onclick="filterSchemes('insurance',this)" style="padding:0.5rem 1.2rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:var(--glass-bg);border:1px solid var(--glass-border);color:var(--green-200);cursor:pointer;transition:all 0.2s">🛡️ Insurance</button>
+      <button class="scheme-filter-btn" data-filter="credit" onclick="filterSchemes('credit',this)" style="padding:0.5rem 1.2rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:var(--glass-bg);border:1px solid var(--glass-border);color:var(--green-200);cursor:pointer;transition:all 0.2s">🏦 Credit & Loans</button>
+      <button class="scheme-filter-btn" data-filter="soil" onclick="filterSchemes('soil',this)" style="padding:0.5rem 1.2rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:var(--glass-bg);border:1px solid var(--glass-border);color:var(--green-200);cursor:pointer;transition:all 0.2s">🌍 Soil & Water</button>
+      <button class="scheme-filter-btn" data-filter="irrigation" onclick="filterSchemes('irrigation',this)" style="padding:0.5rem 1.2rem;border-radius:20px;font-size:0.85rem;font-weight:700;background:var(--glass-bg);border:1px solid var(--glass-border);color:var(--green-200);cursor:pointer;transition:all 0.2s">💧 Irrigation</button>
+    </div>
+
+    <div class="schemes-grid" id="schemes-grid">
+
+      <!-- PM-KISAN -->
+      <div class="scheme-card" data-category="income">
+        <div class="scheme-icon">🌾</div>
+        <h3>PM Kisan Samman Nidhi (PM-KISAN)</h3>
+        <p>Provides ₹6,000/year income support to all small and marginal farmers directly in 3 installments of ₹2,000 each.</p>
+        <ul class="benefit-list">
+          <li>₹2,000 transferred every 4 months directly to bank account</li>
+          <li>No middle-man — direct benefit transfer (DBT)</li>
+          <li>Covers all land-holding farmers across India</li>
+          <li>17th installment recently released (2024-25)</li>
+          <li>Register online or at Common Service Centre (CSC)</li>
+        </ul>
+        <div style="margin-bottom:1rem;padding:0.7rem;background:rgba(255,255,255,0.04);border-radius:10px;font-size:0.82rem;color:var(--green-200)">
+          📋 <strong>Documents needed:</strong> Aadhaar, land records (Khasra/Khatauni), bank passbook, mobile number
+        </div>
+        <a href="https://pmkisan.gov.in" target="_blank" class="btn btn-primary btn-sm">Apply / Check Status →</a>
+      </div>
+
+      <!-- PMFBY -->
+      <div class="scheme-card" data-category="insurance">
+        <div class="scheme-icon">🛡️</div>
+        <h3>Pradhan Mantri Fasal Bima Yojana (PMFBY)</h3>
+        <p>Comprehensive crop insurance scheme providing financial support if crops fail due to natural calamities, pests or diseases.</p>
+        <ul class="benefit-list">
+          <li>Kharif crops: Only 2% premium from farmer</li>
+          <li>Rabi crops: Only 1.5% premium from farmer</li>
+          <li>Horticulture/commercial crops: Max 5% premium</li>
+          <li>Full sum insured coverage — govt pays remaining premium</li>
+          <li>Claim settlement within 2 months of harvest</li>
+        </ul>
+        <div style="margin-bottom:1rem;padding:0.7rem;background:rgba(255,255,255,0.04);border-radius:10px;font-size:0.82rem;color:var(--green-200)">
+          📋 <strong>Apply at:</strong> Nearest bank, insurance company, CSC, or online at pmfby.gov.in before crop season cutoff date
+        </div>
+        <a href="https://pmfby.gov.in" target="_blank" class="btn btn-primary btn-sm">Apply for Insurance →</a>
+      </div>
+
+      <!-- Soil Health Card -->
+      <div class="scheme-card" data-category="soil">
+        <div class="scheme-icon">🧪</div>
+        <h3>Soil Health Card Scheme</h3>
+        <p>Free soil testing for all farmers to know their soil's nutrient status and get customized fertilizer recommendations.</p>
+        <ul class="benefit-list">
+          <li>Free soil testing at government labs</li>
+          <li>Report includes 12 soil health parameters</li>
+          <li>Customized fertilizer & crop recommendations</li>
+          <li>Issued every 2 years per farmer</li>
+          <li>Helps reduce fertilizer costs by 20-30%</li>
+        </ul>
+        <div style="margin-bottom:1rem;padding:0.7rem;background:rgba(255,255,255,0.04);border-radius:10px;font-size:0.82rem;color:var(--green-200)">
+          📋 <strong>Apply at:</strong> Nearest Krishi Kendra, block agriculture office, or online
+        </div>
+        <a href="https://soilhealth.dac.gov.in" target="_blank" class="btn btn-primary btn-sm">Get Soil Card →</a>
+      </div>
+
+      <!-- KCC -->
+      <div class="scheme-card" data-category="credit">
+        <div class="scheme-icon">💳</div>
+        <h3>Kisan Credit Card (KCC)</h3>
+        <p>Flexible short-term credit facility for farmers to meet agricultural and allied activity expenses at subsidized interest rates.</p>
+        <ul class="benefit-list">
+          <li>Credit up to ₹3 lakh at only 7% interest/year</li>
+          <li>Additional 3% subvention for timely repayment (4% net)</li>
+          <li>Flexible repayment aligned with crop harvest cycle</li>
+          <li>Covers crop cultivation, post-harvest, household needs</li>
+          <li>Available from all major banks (SBI, cooperative banks)</li>
+        </ul>
+        <div style="margin-bottom:1rem;padding:0.7rem;background:rgba(255,255,255,0.04);border-radius:10px;font-size:0.82rem;color:var(--green-200)">
+          📋 <strong>Documents:</strong> Aadhaar, land records, bank account, passport photo, crop details
+        </div>
+        <a href="https://www.nabard.org/content.aspx?id=18" target="_blank" class="btn btn-primary btn-sm">Apply for KCC →</a>
+      </div>
+
+      <!-- PM Krishi Sinchayee Yojana -->
+      <div class="scheme-card" data-category="irrigation">
+        <div class="scheme-icon">💧</div>
+        <h3>PM Krishi Sinchayee Yojana (PMKSY)</h3>
+        <p>"More Crop Per Drop" — promotes efficient irrigation to conserve water and improve agricultural productivity.</p>
+        <ul class="benefit-list">
+          <li>90% subsidy on drip irrigation for small/marginal farmers</li>
+          <li>80% subsidy on sprinkler irrigation systems</li>
+          <li>Watershed development and water harvesting</li>
+          <li>Fund for micro-irrigation expansion</li>
+          <li>Reduces water use by 40-50%</li>
+        </ul>
+        <div style="margin-bottom:1rem;padding:0.7rem;background:rgba(255,255,255,0.04);border-radius:10px;font-size:0.82rem;color:var(--green-200)">
+          📋 <strong>Apply at:</strong> District agriculture office or state horticulture department
+        </div>
+        <a href="https://pmksy.gov.in" target="_blank" class="btn btn-primary btn-sm">Apply for Subsidy →</a>
+      </div>
+
+      <!-- National Agriculture Market -->
+      <div class="scheme-card" data-category="income">
+        <div class="scheme-icon">🏪</div>
+        <h3>e-NAM (National Agriculture Market)</h3>
+        <p>Online trading platform for agricultural commodities connecting farmers directly with buyers for better prices.</p>
+        <ul class="benefit-list">
+          <li>Sell produce online at competitive prices</li>
+          <li>Connected to 1,361+ mandis across India</li>
+          <li>Transparent price discovery mechanism</li>
+          <li>Reduce middlemen and improve farmer income</li>
+          <li>Payment directly to farmer bank account</li>
+        </ul>
+        <div style="margin-bottom:1rem;padding:0.7rem;background:rgba(255,255,255,0.04);border-radius:10px;font-size:0.82rem;color:var(--green-200)">
+          📋 <strong>Register at:</strong> enam.gov.in | Helpline: 1800-270-0224 (Toll Free)
+        </div>
+        <a href="https://enam.gov.in" target="_blank" class="btn btn-primary btn-sm">Register on eNAM →</a>
+      </div>
+
+      <!-- MIDH -->
+      <div class="scheme-card" data-category="income">
+        <div class="scheme-icon">🍎</div>
+        <h3>Mission for Integrated Development of Horticulture (MIDH)</h3>
+        <p>Holistic development of horticulture sector including fruits, vegetables, mushroom, spices, flowers and plantation crops.</p>
+        <ul class="benefit-list">
+          <li>50% subsidy on planting material & nursery</li>
+          <li>Subsidies on protected cultivation (poly-houses)</li>
+          <li>Support for cold storage and pack houses</li>
+          <li>Assistance for organic certification</li>
+          <li>Technology intervention for yield improvement</li>
+        </ul>
+        <div style="margin-bottom:1rem;padding:0.7rem;background:rgba(255,255,255,0.04);border-radius:10px;font-size:0.82rem;color:var(--green-200)">
+          📋 <strong>Apply at:</strong> State Horticulture Mission office or district horticulture officer
+        </div>
+        <a href="https://nhm.nic.in" target="_blank" class="btn btn-primary btn-sm">Apply for MIDH →</a>
+      </div>
+
+      <!-- National Livestock Mission -->
+      <div class="scheme-card" data-category="credit">
+        <div class="scheme-icon">🐄</div>
+        <h3>Animal Husbandry Infrastructure Fund</h3>
+        <p>Support for setting up dairy processing, meat processing, animal feed plants and breed improvement facilities.</p>
+        <ul class="benefit-list">
+          <li>3% interest subvention on loans</li>
+          <li>Coverage for dairy, poultry, piggery enterprises</li>
+          <li>NABARD support for rural livestock activities</li>
+          <li>Namdhari breed improvement support</li>
+          <li>Credit guarantee facility available</li>
+        </ul>
+        <div style="margin-bottom:1rem;padding:0.7rem;background:rgba(255,255,255,0.04);border-radius:10px;font-size:0.82rem;color:var(--green-200)">
+          📋 <strong>Apply through:</strong> Scheduled commercial banks or cooperative banks with DPIIT registration
+        </div>
+        <a href="https://dahd.nic.in" target="_blank" class="btn btn-primary btn-sm">Know More →</a>
+      </div>
+
+    </div>
+
+    <!-- Helpline Section -->
+    <div style="margin-top:3rem;background:linear-gradient(135deg,rgba(45,144,80,0.15),rgba(212,160,23,0.08));border:1px solid rgba(61,185,106,0.2);border-radius:24px;padding:2rem;text-align:center">
+      <h3 style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;margin-bottom:1.5rem">
+        📞 Farmer Helplines & Support
+      </h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;max-width:900px;margin:0 auto">
+        <div style="background:rgba(255,255,255,0.05);border-radius:16px;padding:1.2rem">
+          <div style="font-size:1.5rem;margin-bottom:0.4rem">📞</div>
+          <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--green-300)">1800-180-1551</div>
+          <div style="font-size:0.8rem;color:var(--green-200)">Kisan Call Centre (Toll Free)</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.05);border-radius:16px;padding:1.2rem">
+          <div style="font-size:1.5rem;margin-bottom:0.4rem">🌾</div>
+          <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--gold-300)">155261</div>
+          <div style="font-size:0.8rem;color:var(--green-200)">PM-KISAN Helpline</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.05);border-radius:16px;padding:1.2rem">
+          <div style="font-size:1.5rem;margin-bottom:0.4rem">🛡️</div>
+          <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--sky)">1800-200-7710</div>
+          <div style="font-size:0.8rem;color:var(--green-200)">PMFBY Helpline</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.05);border-radius:16px;padding:1.2rem">
+          <div style="font-size:1.5rem;margin-bottom:0.4rem">💧</div>
+          <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--green-300)">1800-180-1551</div>
+          <div style="font-size:0.8rem;color:var(--green-200)">PMKSY / Soil Health</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-brand" style="margin-bottom:0.5rem;display:inline-flex">
+        <div class="brand-icon">🌱</div>
+        <span>KrishiSathi India</span>
+      </a>
+      <p>AI-powered farming platform built to empower Indian farmers with smart technology, real-time data, and expert guidance — in English and Hindi, on any device.</p>
+      <div class="footer-helpline">
+        <span style="font-size:1.2rem">📞</span>
+        <div>
+          <div style="font-size:0.75rem;color:var(--green-200)">Farmer Helpline (Toll Free)</div>
+          <div class="helpline-num">1800-180-1551</div>
+        </div>
+      </div>
+      <div class="footer-app-hint">
+        📲 <span>Install KrishiSathi as an app for offline access — look for the install prompt on the Home page.</span>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/Itz30jay" target="_blank" class="social-link" title="GitHub" style="text-decoration:none;font-size:1.3rem;">🐙</a>
+        <a href="https://www.instagram.com/jay_dev._._?igsh=MTh1Z3B0eHo3NHdveQ==" target="_blank" class="social-link" title="Instagram" style="text-decoration:none;font-size:1.3rem;">📷</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Farm Tools</h4>
+      <ul>
+        <li><a href="crop-prediction.html">🤖 Crop Prediction</a></li>
+        <li><a href="disease-prediction.html">🔬 Disease Screening</a></li>
+        <li><a href="weather.html">🌦️ Weather Updates</a></li>
+        <li><a href="market-prices.html">💰 Market Prices</a></li>
+        <li><a href="soil-map.html">🗺️ Soil Map</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="schemes.html">🏛️ Govt Schemes</a></li>
+        <li><a href="tips.html">💡 Farming Tips</a></li>
+        <li><a href="chat.html">💬 AI Chat</a></li>
+        <li><a href="voice.html">🎤 Voice Assistant</a></li>
+        <li><a href="dashboard.html">📊 Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">ℹ️ About Us</a></li>
+        <li><a href="contact.html">📞 Contact</a></li>
+        <li><a href="register.html">📝 Register</a></li>
+        <li><a href="login.html">🔐 Login</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Govt Portals</h4>
+      <ul>
+        <li><a href="https://pmkisan.gov.in" target="_blank">PM-KISAN</a></li>
+        <li><a href="https://pmfby.gov.in" target="_blank">PMFBY</a></li>
+        <li><a href="https://enam.gov.in" target="_blank">eNAM</a></li>
+        <li><a href="https://agmarknet.gov.in" target="_blank">Agmarknet</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span class="copy-year">2026</span> KrishiSathi India. All rights reserved.</p>
+    <p class="footer-tagline">🌱 Built to Empower Indian Farmers 🇮🇳</p>
+    <p style="font-size:0.8rem;color:var(--green-200)">Privacy Policy | Terms of Use</p>
+  </div>
+</footer>
+
+<script src="/static/js/script.js"></script>
+<script>
+function filterSchemes(category, btn) {
+  document.querySelectorAll('.scheme-filter-btn').forEach(b => {
+    b.style.background = 'var(--glass-bg)';
+    b.style.color = 'var(--green-200)';
+    b.style.borderColor = 'var(--glass-border)';
+  });
+  btn.style.background = 'var(--green-600)';
+  btn.style.color = 'white';
+  btn.style.borderColor = 'var(--green-500)';
+
+  document.querySelectorAll('.scheme-card').forEach(card => {
+    if (category === 'all' || card.dataset.category === category) {
+      card.style.display = 'block';
+      card.style.animation = 'fadeInUp 0.4s ease';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>

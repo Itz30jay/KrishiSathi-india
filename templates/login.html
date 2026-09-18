@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - KrishiSathi India</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+  <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a2e1a">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<nav class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-close" id="mobile-close">✕</button>
+  <a href="index.html">🏠 Home</a>
+  <a href="login.html" class="active">🔑 Login</a>
+  <a href="register.html">📝 Register</a>
+  <a href="contact.html">📞 Contact</a>
+</nav>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="brand-icon">🌱</div>
+    <span>KrishiSathi <span style="color:var(--gold-300)">India</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="register.html">Register</a>
+  </div>
+  <div class="nav-cta">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="hi">हिं</button>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-wrapper">
+<div class="auth-page">
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="logo-icon">🌾</div>
+        <h1>Welcome Back!</h1>
+        <p>Login to your KrishiSathi account</p>
+      </div>
+
+      <div id="login-alert"></div>
+
+      <!-- Demo credentials hint -->
+      <div style="background:rgba(212,160,23,0.1);border:1px solid rgba(212,160,23,0.2);border-radius:12px;padding:0.8rem 1rem;margin-bottom:1.2rem;font-size:0.82rem;color:var(--gold-300)">
+        💡 <strong>Demo:</strong> Email: demo@agrosmart.in | Password: demo1234
+      </div>
+
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label class="form-label">Email or Mobile *</label>
+          <div class="input-icon-wrap">
+            <span class="icon">📧</span>
+            <input type="text" class="form-control" id="login-id" placeholder="Email or mobile number" required>
+          </div>
+          <div class="form-error" id="err-login-id">Please enter email or mobile number</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password *</label>
+          <div class="input-icon-wrap">
+            <span class="icon">🔒</span>
+            <input type="password" class="form-control" id="login-pass" placeholder="Your password" required>
+            <button type="button" class="password-toggle" onclick="togglePass('login-pass',this)">👁️</button>
+          </div>
+          <div class="form-error" id="err-login-pass">Please enter your password</div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem">
+          <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.85rem;color:var(--green-200);cursor:pointer">
+            <input type="checkbox" style="accent-color:var(--green-400)"> Remember me
+          </label>
+          <a href="#" style="font-size:0.85rem;color:var(--green-300)">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full" id="login-btn">
+          🚪 Login to Dashboard
+        </button>
+      </form>
+
+      <div class="form-divider">or continue with</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1rem">
+        <button class="btn btn-secondary" onclick="demoLogin()" style="font-size:0.85rem">
+          🎮 Demo Login
+        </button>
+        <button class="btn btn-secondary" onclick="guestLogin()" style="font-size:0.85rem">
+          👤 Guest Access
+        </button>
+      </div>
+
+      <div class="auth-link">
+        New to KrishiSathi? <a href="register.html">Create free account</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-brand" style="margin-bottom:0.5rem;display:inline-flex">
+        <div class="brand-icon">🌱</div>
+        <span>KrishiSathi India</span>
+      </a>
+      <p>AI-powered farming platform built to empower Indian farmers with smart technology, real-time data, and expert guidance — in English and Hindi, on any device.</p>
+      <div class="footer-helpline">
+        <span style="font-size:1.2rem">📞</span>
+        <div>
+          <div style="font-size:0.75rem;color:var(--green-200)">Farmer Helpline (Toll Free)</div>
+          <div class="helpline-num">1800-180-1551</div>
+        </div>
+      </div>
+      <div class="footer-app-hint">
+        📲 <span>Install KrishiSathi as an app for offline access — look for the install prompt on the Home page.</span>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/Itz30jay" target="_blank" class="social-link" title="GitHub" style="text-decoration:none;font-size:1.3rem;">🐙</a>
+        <a href="https://www.instagram.com/jay_dev._._?igsh=MTh1Z3B0eHo3NHdveQ==" target="_blank" class="social-link" title="Instagram" style="text-decoration:none;font-size:1.3rem;">📷</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Farm Tools</h4>
+      <ul>
+        <li><a href="crop-prediction.html">🤖 Crop Prediction</a></li>
+        <li><a href="disease-prediction.html">🔬 Disease Screening</a></li>
+        <li><a href="weather.html">🌦️ Weather Updates</a></li>
+        <li><a href="market-prices.html">💰 Market Prices</a></li>
+        <li><a href="soil-map.html">🗺️ Soil Map</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="schemes.html">🏛️ Govt Schemes</a></li>
+        <li><a href="tips.html">💡 Farming Tips</a></li>
+        <li><a href="chat.html">💬 AI Chat</a></li>
+        <li><a href="voice.html">🎤 Voice Assistant</a></li>
+        <li><a href="dashboard.html">📊 Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">ℹ️ About Us</a></li>
+        <li><a href="contact.html">📞 Contact</a></li>
+        <li><a href="register.html">📝 Register</a></li>
+        <li><a href="login.html">🔐 Login</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Govt Portals</h4>
+      <ul>
+        <li><a href="https://pmkisan.gov.in" target="_blank">PM-KISAN</a></li>
+        <li><a href="https://pmfby.gov.in" target="_blank">PMFBY</a></li>
+        <li><a href="https://enam.gov.in" target="_blank">eNAM</a></li>
+        <li><a href="https://agmarknet.gov.in" target="_blank">Agmarknet</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span class="copy-year">2026</span> KrishiSathi India. All rights reserved.</p>
+    <p class="footer-tagline">🌱 Built to Empower Indian Farmers 🇮🇳</p>
+    <p style="font-size:0.8rem;color:var(--green-200)">Privacy Policy | Terms of Use</p>
+  </div>
+</footer>
+
+<script src="/static/js/script.js"></script>
+<script>
+function togglePass(id, btn) {
+  const inp = document.getElementById(id);
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  btn.textContent = inp.type === 'password' ? '👁️' : '🙈';
+}
+
+// Demo accounts
+const demoAccounts = [
+  { email: 'demo@agrosmart.in', password: 'demo1234', name: 'Ramesh Kumar', state: 'Punjab', district: 'Ludhiana' },
+  { email: 'farmer@test.in', password: 'farmer123', name: 'Sunita Devi', state: 'Uttar Pradesh', district: 'Varanasi' }
+];
+
+document.getElementById('login-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const loginId = document.getElementById('login-id').value.trim();
+  const password = document.getElementById('login-pass').value;
+  let valid = true;
+
+  const showErr = (id, show) => document.getElementById(id).classList.toggle('show', show);
+
+  if (!loginId) { showErr('err-login-id', true); valid = false; } else showErr('err-login-id', false);
+  if (!password) { showErr('err-login-pass', true); valid = false; } else showErr('err-login-pass', false);
+
+  if (!valid) return;
+
+  const btn = document.getElementById('login-btn');
+  btn.innerHTML = '⏳ Logging in...';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    // Check demo accounts
+    const demo = demoAccounts.find(a => (a.email === loginId || loginId === a.mobile) && a.password === password);
+
+    // Check registered user
+    let registered = null;
+    try {
+      const saved = JSON.parse(localStorage.getItem('agro-registered'));
+      if (saved && (saved.email === loginId || saved.mobile === loginId) && saved.password === password) {
+        registered = saved;
+      }
+    } catch(e) {}
+
+    const user = demo || registered;
+
+    if (user) {
+      localStorage.setItem('agro-user', JSON.stringify({ name: user.name, email: user.email, state: user.state, district: user.district }));
+      document.getElementById('login-alert').innerHTML = '<div class="alert alert-success">✅ Login successful! Redirecting...</div>';
+      setTimeout(() => window.location.href = 'dashboard.html', 1200);
+    } else {
+      btn.innerHTML = '🚪 Login to Dashboard';
+      btn.disabled = false;
+      document.getElementById('login-alert').innerHTML = '<div class="alert alert-error">❌ Invalid credentials. Try demo@agrosmart.in / demo1234</div>';
+    }
+  }, 1000);
+});
+
+function demoLogin() {
+  document.getElementById('login-id').value = 'demo@agrosmart.in';
+  document.getElementById('login-pass').value = 'demo1234';
+  document.getElementById('login-form').dispatchEvent(new Event('submit'));
+}
+
+function guestLogin() {
+  localStorage.setItem('agro-user', JSON.stringify({ name: 'Guest Farmer', email: 'guest@agrosmart.in', state: 'India', district: 'General' }));
+  window.location.href = 'dashboard.html';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Assistant - KrishiSathi India</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+  <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a2e1a">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<nav class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-close" id="mobile-close">✕</button>
+  <a href="index.html">🏠 Home</a><a href="dashboard.html">📊 Dashboard</a>
+  <a href="chat.html">💬 Chat</a><a href="voice.html">🎤 Voice</a>
+</nav>
+<nav class="navbar">
+  <a href="index.html" class="nav-brand"><div class="brand-icon">🌱</div><span>KrishiSathi <span style="color:var(--gold-300)">India</span></span></a>
+  <div class="nav-links"><a href="index.html">Home</a><a href="dashboard.html">Dashboard</a><a href="chat.html">Chat</a><a href="voice.html" class="active">Voice</a></div>
+  <div class="nav-cta"><button class="lang-btn" data-lang="en">EN</button><button class="lang-btn" data-lang="hi">हिं</button><a href="chat.html" class="btn btn-secondary btn-sm">💬 Chat</a></div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-wrapper" style="padding-top:80px">
+<section style="padding:2rem 1.5rem 5rem">
+  <div class="section-header">
+    <div class="page-icon-badge">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <rect x="42" y="14" width="16" height="34" rx="8" style="fill:var(--green-400)"/>
+        <path d="M30,40 Q30,60 50,60 Q70,60 70,40" stroke="var(--green-500)" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <line x1="50" y1="60" x2="50" y2="76" stroke="var(--green-500)" stroke-width="4" stroke-linecap="round"/>
+        <line x1="36" y1="76" x2="64" y2="76" stroke="var(--green-500)" stroke-width="4" stroke-linecap="round"/>
+        <path d="M16,30 Q8,42 16,54" stroke="var(--sky)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M84,30 Q92,42 84,54" stroke="var(--sky)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="section-tag">🎤 Voice Technology</div>
+    <h1 class="section-title">Voice <span class="accent">Assistant</span></h1>
+    <p class="section-desc">Speak your farming questions — our AI understands Hindi & English and gives instant voice replies</p>
+  </div>
+
+  <div style="max-width:700px;margin:0 auto">
+
+    <!-- Language Selection -->
+    <div style="display:flex;gap:0.8rem;justify-content:center;margin-bottom:2rem">
+      <button onclick="setVoiceLang('en-IN','English')" id="vlang-en" style="padding:0.6rem 1.5rem;border-radius:20px;font-size:0.9rem;font-weight:700;background:var(--green-600);border:1px solid var(--green-500);color:white;cursor:pointer;transition:all 0.2s">
+        🇺🇸 English
+      </button>
+      <button onclick="setVoiceLang('hi-IN','Hindi')" id="vlang-hi" style="padding:0.6rem 1.5rem;border-radius:20px;font-size:0.9rem;font-weight:700;background:var(--glass-bg);border:1px solid var(--glass-border);color:var(--green-200);cursor:pointer;transition:all 0.2s">
+        🇮🇳 हिंदी
+      </button>
+    </div>
+
+    <!-- Voice Orb -->
+    <div class="voice-container">
+      <p style="color:var(--green-200);font-size:0.95rem">Tap the microphone to start speaking</p>
+
+      <div class="voice-orb" id="voice-orb" onclick="window.ChatBot?.toggleListening('voice-transcript')" title="Tap to speak">
+        🎤
+      </div>
+
+      <div id="voice-status" style="color:var(--green-200);font-size:0.95rem;margin-bottom:1rem">
+        🔇 Tap microphone to speak
+      </div>
+
+      <!-- Live transcript -->
+      <div style="width:100%;margin-bottom:1rem">
+        <label style="font-size:0.8rem;color:var(--green-300);font-weight:700;display:block;margin-bottom:0.4rem;text-align:left">
+          🗣️ Your Question:
+        </label>
+        <div class="voice-transcript" id="voice-transcript" contenteditable="false">
+          Tap the microphone and ask your farming question...
+        </div>
+      </div>
+
+      <!-- Response -->
+      <div id="voice-response" style="width:100%"></div>
+
+      <!-- Action Buttons -->
+      <div style="display:flex;gap:0.8rem;justify-content:center;margin-top:1.5rem;flex-wrap:wrap">
+        <button class="btn btn-primary" id="voice-mic-btn" onclick="window.ChatBot?.toggleListening('voice-transcript')">
+          🎤 Start Speaking
+        </button>
+        <button class="btn btn-secondary" onclick="clearVoice()">
+          🗑️ Clear
+        </button>
+        <a href="chat.html" class="btn btn-secondary">
+          💬 Switch to Chat
+        </a>
+      </div>
+
+      <!-- Sample Questions -->
+      <div style="width:100%;margin-top:2rem;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:20px;padding:1.5rem;backdrop-filter:blur(15px)">
+        <h4 style="font-family:var(--font-display);font-weight:700;margin-bottom:1rem;font-size:1rem;color:var(--green-300);text-align:left">
+          💡 Try Saying These:
+        </h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem">
+          <button onclick="tryPhrase(this.textContent)" style="padding:0.6rem 0.8rem;background:rgba(61,185,106,0.1);border:1px solid rgba(61,185,106,0.2);border-radius:10px;font-size:0.82rem;color:var(--green-100);cursor:pointer;text-align:left;transition:all 0.2s" onmouseover="this.style.background='rgba(61,185,106,0.2)'" onmouseout="this.style.background='rgba(61,185,106,0.1)'">"Which crop should I grow?"</button>
+          <button onclick="tryPhrase(this.textContent)" style="padding:0.6rem 0.8rem;background:rgba(61,185,106,0.1);border:1px solid rgba(61,185,106,0.2);border-radius:10px;font-size:0.82rem;color:var(--green-100);cursor:pointer;text-align:left;transition:all 0.2s" onmouseover="this.style.background='rgba(61,185,106,0.2)'" onmouseout="this.style.background='rgba(61,185,106,0.1)'">"How to control pests?"</button>
+          <button onclick="tryPhrase(this.textContent)" style="padding:0.6rem 0.8rem;background:rgba(61,185,106,0.1);border:1px solid rgba(61,185,106,0.2);border-radius:10px;font-size:0.82rem;color:var(--green-100);cursor:pointer;text-align:left;transition:all 0.2s" onmouseover="this.style.background='rgba(61,185,106,0.2)'" onmouseout="this.style.background='rgba(61,185,106,0.1)'">"What fertilizer to use?"</button>
+          <button onclick="tryPhrase(this.textContent)" style="padding:0.6rem 0.8rem;background:rgba(61,185,106,0.1);border:1px solid rgba(61,185,106,0.2);border-radius:10px;font-size:0.82rem;color:var(--green-100);cursor:pointer;text-align:left;transition:all 0.2s" onmouseover="this.style.background='rgba(61,185,106,0.2)'" onmouseout="this.style.background='rgba(61,185,106,0.1)'">"Government schemes info"</button>
+          <button onclick="tryPhrase(this.textContent)" style="padding:0.6rem 0.8rem;background:rgba(61,185,106,0.1);border:1px solid rgba(61,185,106,0.2);border-radius:10px;font-size:0.82rem;color:var(--green-100);cursor:pointer;text-align:left;transition:all 0.2s" onmouseover="this.style.background='rgba(61,185,106,0.2)'" onmouseout="this.style.background='rgba(61,185,106,0.1)'">"Weather today farming"</button>
+          <button onclick="tryPhrase(this.textContent)" style="padding:0.6rem 0.8rem;background:rgba(61,185,106,0.1);border:1px solid rgba(61,185,106,0.2);border-radius:10px;font-size:0.82rem;color:var(--green-100);cursor:pointer;text-align:left;transition:all 0.2s" onmouseover="this.style.background='rgba(61,185,106,0.2)'" onmouseout="this.style.background='rgba(61,185,106,0.1)'">"How to irrigate crops?"</button>
+        </div>
+      </div>
+
+      <!-- Browser Support Note -->
+      <div style="margin-top:1.5rem;padding:0.9rem 1rem;background:rgba(255,159,28,0.08);border:1px solid rgba(255,159,28,0.15);border-radius:12px;font-size:0.82rem;color:var(--green-200);text-align:left;width:100%">
+        ℹ️ <strong>Browser support:</strong> Voice input works best in Chrome and Edge. Safari has limited support. Allow microphone access when prompted.
+        If voice doesn't work, use the <a href="chat.html" style="color:var(--sky)">text chat</a> instead.
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-brand" style="margin-bottom:0.5rem;display:inline-flex">
+        <div class="brand-icon">🌱</div>
+        <span>KrishiSathi India</span>
+      </a>
+      <p>AI-powered farming platform built to empower Indian farmers with smart technology, real-time data, and expert guidance — in English and Hindi, on any device.</p>
+      <div class="footer-helpline">
+        <span style="font-size:1.2rem">📞</span>
+        <div>
+          <div style="font-size:0.75rem;color:var(--green-200)">Farmer Helpline (Toll Free)</div>
+          <div class="helpline-num">1800-180-1551</div>
+        </div>
+      </div>
+      <div class="footer-app-hint">
+        📲 <span>Install KrishiSathi as an app for offline access — look for the install prompt on the Home page.</span>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/Itz30jay" target="_blank" class="social-link" title="GitHub" style="text-decoration:none;font-size:1.3rem;">🐙</a>
+        <a href="https://www.instagram.com/jay_dev._._?igsh=MTh1Z3B0eHo3NHdveQ==" target="_blank" class="social-link" title="Instagram" style="text-decoration:none;font-size:1.3rem;">📷</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Farm Tools</h4>
+      <ul>
+        <li><a href="crop-prediction.html">🤖 Crop Prediction</a></li>
+        <li><a href="disease-prediction.html">🔬 Disease Screening</a></li>
+        <li><a href="weather.html">🌦️ Weather Updates</a></li>
+        <li><a href="market-prices.html">💰 Market Prices</a></li>
+        <li><a href="soil-map.html">🗺️ Soil Map</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="schemes.html">🏛️ Govt Schemes</a></li>
+        <li><a href="tips.html">💡 Farming Tips</a></li>
+        <li><a href="chat.html">💬 AI Chat</a></li>
+        <li><a href="voice.html">🎤 Voice Assistant</a></li>
+        <li><a href="dashboard.html">📊 Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">ℹ️ About Us</a></li>
+        <li><a href="contact.html">📞 Contact</a></li>
+        <li><a href="register.html">📝 Register</a></li>
+        <li><a href="login.html">🔐 Login</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Govt Portals</h4>
+      <ul>
+        <li><a href="https://pmkisan.gov.in" target="_blank">PM-KISAN</a></li>
+        <li><a href="https://pmfby.gov.in" target="_blank">PMFBY</a></li>
+        <li><a href="https://enam.gov.in" target="_blank">eNAM</a></li>
+        <li><a href="https://agmarknet.gov.in" target="_blank">Agmarknet</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span class="copy-year">2026</span> KrishiSathi India. All rights reserved.</p>
+    <p class="footer-tagline">🌱 Built to Empower Indian Farmers 🇮🇳</p>
+    <p style="font-size:0.8rem;color:var(--green-200)">Privacy Policy | Terms of Use</p>
+  </div>
+</footer>
+
+<script src="/static/js/script.js"></script>
+<script src="/static/js/chatbot.js"></script>
+<script>
+let selectedVoiceLang = 'en-IN';
+
+function setVoiceLang(lang, label) {
+  selectedVoiceLang = lang;
+  window.ChatBot?.setVoiceLang(lang);
+  document.getElementById('vlang-en').style.background = 'var(--glass-bg)';
+  document.getElementById('vlang-en').style.color = 'var(--green-200)';
+  document.getElementById('vlang-hi').style.background = 'var(--glass-bg)';
+  document.getElementById('vlang-hi').style.color = 'var(--green-200)';
+  const btnId = lang === 'en-IN' ? 'vlang-en' : 'vlang-hi';
+  document.getElementById(btnId).style.background = 'var(--green-600)';
+  document.getElementById(btnId).style.color = 'white';
+  window.KrishiSathi?.showToast(`Voice language set to ${label}`, 'success');
+}
+
+function clearVoice() {
+  const transcript = document.getElementById('voice-transcript');
+  const response = document.getElementById('voice-response');
+  if (transcript) transcript.textContent = 'Tap the microphone and ask your farming question...';
+  if (response) response.innerHTML = '';
+}
+
+function tryPhrase(phrase) {
+  const transcript = document.getElementById('voice-transcript');
+  const cleanPhrase = phrase.replace(/"/g, '');
+  if (transcript) transcript.textContent = cleanPhrase;
+  if (window.ChatBot?.processVoiceQuery) {
+    window.ChatBot.processVoiceQuery(cleanPhrase);
+  }
+}
+</script>
+</body>
+</html>

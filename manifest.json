@@ -1,0 +1,60 @@
+{
+  "name": "KrishiSathi India - Farmer's Companion",
+  "short_name": "KrishiSathi",
+  "description": "AI-powered crop recommendation, plant disease screening, weather, mandi prices and government schemes for Indian farmers.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0a2e1a",
+  "theme_color": "#0a2e1a",
+  "lang": "en-IN",
+  "dir": "ltr",
+  "categories": ["agriculture", "utilities", "weather"],
+  "icons": [
+    {
+      "src": "/static/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/static/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Crop Recommendation",
+      "short_name": "Crop AI",
+      "url": "/crop-prediction.html",
+      "description": "Get an AI crop recommendation for your field"
+    },
+    {
+      "name": "Weather",
+      "short_name": "Weather",
+      "url": "/weather.html",
+      "description": "Check today's weather and farm advisory"
+    },
+    {
+      "name": "Market Prices",
+      "short_name": "Market",
+      "url": "/market-prices.html",
+      "description": "Today's mandi prices"
+    }
+  ]
+}

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Support - KrishiSathi India</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+  <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a2e1a">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<nav class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-close" id="mobile-close">✕</button>
+  <a href="index.html">🏠 Home</a><a href="dashboard.html">📊 Dashboard</a>
+  <a href="chat.html">💬 Chat</a><a href="voice.html">🎤 Voice</a>
+</nav>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand"><div class="brand-icon">🌱</div><span>KrishiSathi <span style="color:var(--gold-300)">India</span></span></a>
+  <div class="nav-links"><a href="index.html">Home</a><a href="dashboard.html">Dashboard</a><a href="crop-prediction.html">Crop AI</a>
+    <a href="disease-prediction.html">Disease AI</a><a href="chat.html" class="active">Chat</a><a href="voice.html">Voice</a></div>
+  <div class="nav-cta"><button class="lang-btn" data-lang="en">EN</button><button class="lang-btn" data-lang="hi">हिं</button><a href="dashboard.html" class="btn btn-secondary btn-sm">← Dashboard</a></div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-wrapper" style="padding-top:80px">
+<section style="padding:2rem 1.5rem 5rem">
+  <div class="section-header">
+    <div class="page-icon-badge">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15,25 Q15,15 25,15 L75,15 Q85,15 85,25 L85,52 Q85,62 75,62 L42,62 L26,78 L28,62 L25,62 Q15,62 15,52Z" style="fill:var(--green-500)"/>
+        <path d="M50,48 C40,48 36,36 40,26 C50,29 54,40 50,48Z" style="fill:var(--green-200)"/>
+        <path d="M50,43 C60,43 64,31 60,21 C50,24 46,35 50,43Z" style="fill:var(--green-100)"/>
+      </svg>
+    </div>
+    <div class="section-tag">🤖 AI Support</div>
+    <h1 class="section-title">Farmer <span class="accent">Chat Support</span></h1>
+    <p class="section-desc">Ask Bot Assistant anything about farming — available 24/7 in English and Hindi</p>
+  </div>
+
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 280px;gap:1.5rem;align-items:start">
+
+    <!-- Chat Container -->
+    <div class="chat-container">
+      <!-- Chat Header -->
+      <div class="chat-header">
+        <div class="chat-avatar">🤖</div>
+        <div>
+          <div style="font-family:var(--font-display);font-weight:700;font-size:1rem">Bot Assistant</div>
+          <div class="chat-status">Online — Ready to help</div>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:0.5rem">
+          <button onclick="clearChat()" title="Clear chat" style="background:rgba(255,255,255,0.08);border:1px solid var(--glass-border);border-radius:8px;padding:0.3rem 0.6rem;color:var(--green-200);cursor:pointer;font-size:0.8rem">🗑️ Clear</button>
+          <a href="voice.html" title="Voice mode" style="background:rgba(255,159,28,0.1);border:1px solid rgba(255,159,28,0.2);border-radius:8px;padding:0.3rem 0.6rem;color:var(--amber);font-size:0.8rem;display:flex;align-items:center;gap:0.3rem">🎤 Voice</a>
+        </div>
+      </div>
+
+      <!-- Messages Area -->
+      <div class="chat-messages" id="chat-messages">
+        <!-- Messages injected by JS -->
+      </div>
+
+      <!-- Quick Replies -->
+      <div class="chat-quick-replies" id="quick-replies">
+        <button class="quick-reply">🌾 Best crop for my area</button>
+        <button class="quick-reply">🪲 Pest control tips</button>
+        <button class="quick-reply">🧪 Fertilizer advice</button>
+        <button class="quick-reply">💧 Irrigation methods</button>
+        <button class="quick-reply">🏛️ Government schemes</button>
+        <button class="quick-reply">💰 Sell at best price</button>
+      </div>
+
+      <!-- Input Row -->
+      <div class="chat-input-wrap">
+        <input type="text" class="chat-input" id="chat-input-field" placeholder="Ask about crops, pests, fertilizers, schemes... (Hindi/English)" autocomplete="off">
+        <button class="mic-btn" id="chat-mic-btn" title="Voice input">🎤</button>
+        <button class="btn btn-primary" id="chat-send-btn" style="padding:0.75rem 1.2rem">
+          Send ➤
+        </button>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      <!-- Language Mode -->
+      <div style="background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:16px;padding:1.2rem;backdrop-filter:blur(15px)">
+        <h4 style="font-family:var(--font-display);font-weight:700;font-size:0.9rem;margin-bottom:0.8rem;color:var(--green-300)">🗣️ Chat Language</h4>
+        <div style="display:flex;gap:0.5rem">
+          <button onclick="setLang('en-IN',this)" style="flex:1;padding:0.5rem;border-radius:8px;font-size:0.82rem;font-weight:700;background:var(--green-600);border:1px solid var(--green-500);color:white;cursor:pointer" id="lang-en">English</button>
+          <button onclick="setLang('hi-IN',this)" style="flex:1;padding:0.5rem;border-radius:8px;font-size:0.82rem;font-weight:700;background:var(--glass-bg);border:1px solid var(--glass-border);color:var(--green-200);cursor:pointer" id="lang-hi">हिंदी</button>
+        </div>
+      </div>
+
+      <!-- Topics -->
+      <div style="background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:16px;padding:1.2rem;backdrop-filter:blur(15px)">
+        <h4 style="font-family:var(--font-display);font-weight:700;font-size:0.9rem;margin-bottom:0.8rem;color:var(--green-300)">💬 Popular Topics</h4>
+        <div style="display:flex;flex-direction:column;gap:0.4rem">
+          <button class="quick-reply" style="text-align:left;border-radius:8px">🌾 Rice cultivation</button>
+          <button class="quick-reply" style="text-align:left;border-radius:8px">🌽 Wheat farming</button>
+          <button class="quick-reply" style="text-align:left;border-radius:8px">🌿 Cotton tips</button>
+          <button class="quick-reply" style="text-align:left;border-radius:8px">🥜 Groundnut advice</button>
+          <button class="quick-reply" style="text-align:left;border-radius:8px">🍄 Fungal disease</button>
+          <button class="quick-reply" style="text-align:left;border-radius:8px">🌱 Organic farming</button>
+          <button class="quick-reply" style="text-align:left;border-radius:8px">💧 Drip irrigation</button>
+          <button class="quick-reply" style="text-align:left;border-radius:8px">🏛️ PM-KISAN status</button>
+        </div>
+      </div>
+
+      <!-- Helpline -->
+      <div style="background:rgba(61,185,106,0.1);border:1px solid rgba(61,185,106,0.2);border-radius:16px;padding:1.2rem">
+        <h4 style="font-family:var(--font-display);font-weight:700;font-size:0.9rem;margin-bottom:0.6rem;color:var(--green-300)">📞 Human Support</h4>
+        <p style="font-size:0.8rem;color:var(--green-200);margin-bottom:0.5rem">Talk to a real agriculture expert:</p>
+        <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--green-300)">1800-180-1551</div>
+        <div style="font-size:0.75rem;color:var(--green-200)">Toll Free | Mon-Sat 6AM-10PM</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-brand" style="margin-bottom:0.5rem;display:inline-flex">
+        <div class="brand-icon">🌱</div>
+        <span>KrishiSathi India</span>
+      </a>
+      <p>AI-powered farming platform built to empower Indian farmers with smart technology, real-time data, and expert guidance — in English and Hindi, on any device.</p>
+      <div class="footer-helpline">
+        <span style="font-size:1.2rem">📞</span>
+        <div>
+          <div style="font-size:0.75rem;color:var(--green-200)">Farmer Helpline (Toll Free)</div>
+          <div class="helpline-num">1800-180-1551</div>
+        </div>
+      </div>
+      <div class="footer-app-hint">
+        📲 <span>Install KrishiSathi as an app for offline access — look for the install prompt on the Home page.</span>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/Itz30jay" target="_blank" class="social-link" title="GitHub" style="text-decoration:none;font-size:1.3rem;">🐙</a>
+        <a href="https://www.instagram.com/jay_dev._._?igsh=MTh1Z3B0eHo3NHdveQ==" target="_blank" class="social-link" title="Instagram" style="text-decoration:none;font-size:1.3rem;">📷</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Farm Tools</h4>
+      <ul>
+        <li><a href="crop-prediction.html">🤖 Crop Prediction</a></li>
+        <li><a href="disease-prediction.html">🔬 Disease Screening</a></li>
+        <li><a href="weather.html">🌦️ Weather Updates</a></li>
+        <li><a href="market-prices.html">💰 Market Prices</a></li>
+        <li><a href="soil-map.html">🗺️ Soil Map</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="schemes.html">🏛️ Govt Schemes</a></li>
+        <li><a href="tips.html">💡 Farming Tips</a></li>
+        <li><a href="chat.html">💬 AI Chat</a></li>
+        <li><a href="voice.html">🎤 Voice Assistant</a></li>
+        <li><a href="dashboard.html">📊 Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">ℹ️ About Us</a></li>
+        <li><a href="contact.html">📞 Contact</a></li>
+        <li><a href="register.html">📝 Register</a></li>
+        <li><a href="login.html">🔐 Login</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Govt Portals</h4>
+      <ul>
+        <li><a href="https://pmkisan.gov.in" target="_blank">PM-KISAN</a></li>
+        <li><a href="https://pmfby.gov.in" target="_blank">PMFBY</a></li>
+        <li><a href="https://enam.gov.in" target="_blank">eNAM</a></li>
+        <li><a href="https://agmarknet.gov.in" target="_blank">Agmarknet</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span class="copy-year">2026</span> KrishiSathi India. All rights reserved.</p>
+    <p class="footer-tagline">🌱 Built to Empower Indian Farmers 🇮🇳</p>
+    <p style="font-size:0.8rem;color:var(--green-200)">Privacy Policy | Terms of Use</p>
+  </div>
+</footer>
+
+<script src="/static/js/script.js"></script>
+<script src="/static/js/chatbot.js"></script>
+<script>
+function clearChat() {
+  const msgs = document.getElementById('chat-messages');
+  if (msgs) {
+    msgs.innerHTML = '';
+    setTimeout(() => {
+      if (window.ChatBot) window.ChatBot.sendMessage = window.ChatBot.sendMessage;
+      const { addMessage } = window.ChatBot || {};
+      // Reinit welcome
+      const msg = document.createElement('div');
+      msg.className = 'msg-bot';
+      msg.innerHTML = '🌱 Chat cleared. How can I help you today?';
+      msgs.appendChild(msg);
+    }, 100);
+  }
+}
+
+let voiceLang = 'en-IN';
+function setLang(lang, btn) {
+  voiceLang = lang;
+  document.querySelectorAll('#lang-en, #lang-hi').forEach(b => {
+    b.style.background = 'var(--glass-bg)';
+    b.style.color = 'var(--green-200)';
+    b.style.borderColor = 'var(--glass-border)';
+  });
+  btn.style.background = 'var(--green-600)';
+  btn.style.color = 'white';
+  btn.style.borderColor = 'var(--green-500)';
+  if (window.ChatBot?.recognition) {
+    window.ChatBot.recognition.lang = lang;
+  }
+}
+
+// Handle sidebar topic clicks
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.chat-quick-replies .quick-reply, #quick-replies .quick-reply').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (window.ChatBot?.sendMessage) {
+        window.ChatBot.sendMessage(btn.textContent.trim());
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
